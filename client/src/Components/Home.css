@@ -1,0 +1,35 @@
+.home_container {
+    margin-top: 100px;
+}
+
+.search_box_content input {
+    border: none;
+    outline: none;
+}
+
+.search_box_content input:focus,
+.search_box_content input:hover {
+    border: none;
+}
+
+.search_box_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search_box_content {
+    gap: 20px;
+    border: 1px solid #1E90FF;
+}
+
+.job_search input {
+    width: 200px;
+}
+/* 
+
+#1E90FF---blue
+#800080 --- purple
+#FF1493 -- pink
+
+*/

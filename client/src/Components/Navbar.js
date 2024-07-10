@@ -18,7 +18,7 @@ function Navbar() {
 
         <div className='nav_links'>
           <ul>
-            <li><Link className='Link br_btn' to="/home">Employee | Post Job</Link></li>
+            <li><Link className='Link br_btn' to="/signup">Employee | Post Job</Link></li>
           </ul>
         </div>
       </div>

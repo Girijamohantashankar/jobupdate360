@@ -40,7 +40,7 @@ function Login() {
         setPassword('');
         localStorage.setItem('token', data.token);
         setLoading(false);
-        navigate('/');
+        navigate('/dashboard');
       }
     } catch (error) {
       toast.error('Failed to connect to the server. Please try again later');

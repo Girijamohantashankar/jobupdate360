@@ -8,14 +8,31 @@ function Navbar() {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    // Check if the user is logged in by checking for a token in localStorage
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Simulate fetching the user's name
-      const user = { name: 'Girija Shankar Mohanta' }; // Replace this with actual API call to fetch user details
-      setUserName(user.name);
-      setIsLoggedIn(true);
-    }
+    const fetchUserName = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await fetch('http://localhost:5000/api/user/username', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setUserName(data.name);
+            setIsLoggedIn(true);
+          } else {
+            setIsLoggedIn(false);
+          }
+        } catch (error) {
+          console.error('Failed to fetch username:', error);
+          setIsLoggedIn(false);
+        }
+      }
+    };
+
+    fetchUserName();
   }, []);
 
   return (

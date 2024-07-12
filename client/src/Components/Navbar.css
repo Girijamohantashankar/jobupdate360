@@ -60,6 +60,14 @@
     align-items: center;
 
 }
+
+.user_profile{
+    border: 1px solid red;
+    padding: 4px 9px;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
 /* 
 
 #1E90FF---blue

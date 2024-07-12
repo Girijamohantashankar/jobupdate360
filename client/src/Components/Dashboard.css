@@ -1,0 +1,40 @@
+.main_dashboard{
+    position: absolute;
+    top: 12%;
+    width: 100%;
+}
+.dashboard_container {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.dashboard_slider {
+    width: 90%; 
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    background-color: red;
+    border: 2px solid black; 
+    padding: 4px 5px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.dashboard_greeting {
+    display: inline-block;
+    animation: slide-in 20s linear infinite;
+    font-size: 24px; 
+    color: #fff;
+    font-weight: bold;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}

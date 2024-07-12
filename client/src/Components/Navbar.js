@@ -22,10 +22,10 @@ function Navbar() {
     <div className="navbar_container">
       <div className="nav_bar">
         <div className="logo">
-          <Link to="/home">
+          <Link to="/">
             <img src={logo} alt="logo" className="logo_img" />
           </Link>
-          <Link className="Link br_btn" to="/home">Home</Link>
+          <Link className="Link br_btn" to="/">Home</Link>
           <Link className="Link br_btn" to="/review">People Review</Link>
         </div>
 

@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/logo.png';
+import { AuthContext } from '../AuthContext';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserName = async () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await fetch('http://localhost:5000/api/auth/username', {
+          const response = await fetch('http://localhost:5000/api/user/username', {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -36,41 +35,24 @@ function Navbar() {
 
     fetchUserName();
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    navigate('/home');
-  };
-
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
-
   return (
     <div className="navbar_container">
       <div className="nav_bar">
         <div className="logo">
-          <Link to="/home">
+          <Link to="/">
             <img src={logo} alt="logo" className="logo_img" />
           </Link>
-          <Link className="Link br_btn" to="/home">Home</Link>
+          <Link className="Link br_btn" to="/">Home</Link>
           <Link className="Link br_btn" to="/review">People Review</Link>
         </div>
 
         <div className="nav_links">
-          <ul>
+        <ul>
             {isLoggedIn ? (
-              <li className="user_profile" onClick={toggleDropdown}>
-                <div className="profile_icon">
+              <li className="user_profile">
+                <Link className="Link br_btn" to="/profile">
                   {userName.charAt(0).toUpperCase()}
-                </div>
-                {showDropdown && (
-                  <div className="dropdown_menu">
-                    <Link to="" className="dropdown_item">Profile</Link>
-                    <div className="dropdown_item" onClick={handleLogout}>Logout</div>
-                  </div>
-                )}
+                </Link>
               </li>
             ) : (
               <li>

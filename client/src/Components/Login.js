@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AuthForm.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -8,8 +8,22 @@ import 'react-toastify/dist/ReactToastify.css';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    const rememberedPass = localStorage.getItem('rememberedPass');
+    if (rememberedEmail) {
+      setEmail(rememberedEmail);
+      setRemember(true);
+    }
+    if (rememberedPass) {
+      setPassword(rememberedPass);
+      setRemember(true);
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,6 +52,16 @@ function Login() {
         toast.success(data.message || 'Login successful!');
         setEmail('');
         setPassword('');
+        if (remember) {
+          localStorage.setItem('rememberedEmail', email);
+          localStorage.setItem('rememberedPass', password);
+        } else {
+          localStorage.removeItem('rememberedEmail');
+          localStorage.removeItem('rememberedPass');
+        }
+
+
+
         localStorage.setItem('token', data.token);
         setLoading(false);
         navigate('/dashboard');
@@ -53,22 +77,33 @@ function Login() {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label>Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="email"
+            id="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label>Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
             type="password"
+            id="password"
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+        </div>
+        <div className="form-group remember_btn">
+          <input
+            type="checkbox"
+            id="remember"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+          />
+          <label htmlFor="remember">Remember me</label>
         </div>
         {loading && <Loader />}
         <button type="submit" className="auth-button">Login</button>

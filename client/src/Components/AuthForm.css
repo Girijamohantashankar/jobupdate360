@@ -59,3 +59,13 @@ form {
 .form-group input:hover {
   border: 1px solid #007bff;
 }
+.remember_btn{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}.remember_btn label{
+  padding-top: 5px;
+  
+}.remember_btn label,.remember_btn input{
+  cursor: pointer;
+}

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
+import { Link } from 'react-router-dom';
+import job from "../assets/job.png";
+import people from "../assets/people.png";
 
 function Dashboard() {
   const [greeting, setGreeting] = useState('');
@@ -29,7 +32,7 @@ function Dashboard() {
         setUserName(data.name);
       } catch (error) {
         console.error('Error fetching user data:', error.message);
-        
+
       }
     };
 
@@ -48,11 +51,24 @@ function Dashboard() {
   }, [userName]);
 
   return (
-    <div className="dashboard_container">
-      <div className="dashboard_slider">
-        <div className="dashboard_greeting">{greeting}</div>
+    <>
+      <div className="dashboard_container">
+        <div className="dashboard_slider">
+          <div className="dashboard_greeting">{greeting}</div>
+        </div>
+      </div >
+      <div className='dashboard_cards'>
+        <Link className='dashboard_card'>
+        <img src={people}  className='people_img'/>
+          <p className='dashboard_card_title'>People Applied</p>
+        </Link>
+        <Link className='dashboard_card'>
+          <img src={job} className='job_img' />
+          <p className='dashboard_card_title'>Create Jobs</p>
+        </Link>
       </div>
-    </div>
+    </>
+
   );
 }
 

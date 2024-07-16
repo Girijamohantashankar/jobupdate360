@@ -72,6 +72,9 @@ function Navbar() {
           </Link>
           <Link className="Link br_btn" to="/">Home</Link>
           <Link className="Link br_btn" to="/review">People Review</Link>
+          {isLoggedIn && (
+            <Link className="Link br_btn" to="/dashboard">Dashboard</Link>
+          )}
         </div>
 
         <div className="nav_links">

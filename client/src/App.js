@@ -1,28 +1,32 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
+import React, { useContext } from 'react';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
-import Login from './Components/Login';
 import Signup from './Components/Signup';
-import Dashboard from './Components/Dashboard';
+import Login from './Components/Login';
 import Profile from './Components/Profile';
-import { AuthProvider } from './AuthContext';
+import Dashboard from './Components/Dashboard';
+import NotFound from './Components/NotFound';
+import { AuthContext } from './AuthContext'; // Import AuthContext
 
 function App() {
+  const location = useLocation();
+  const { isLoggedIn } = useContext(AuthContext); // Get the authentication state from the context
+
+  const showNavbar = location.pathname !== '/login' && location.pathname !== '/signup';
+
   return (
-    <AuthProvider>
-      <div>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </div>
-    </AuthProvider>
+    <div>
+      {showNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 

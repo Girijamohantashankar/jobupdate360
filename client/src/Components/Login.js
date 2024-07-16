@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './AuthForm.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import Loader from './Loader';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../AuthContext'; // Import AuthContext
 
 function Login() {
+  const { setIsLoggedIn, setUserName } = useContext(AuthContext); // Use AuthContext to set authentication state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -60,9 +62,11 @@ function Login() {
           localStorage.removeItem('rememberedPass');
         }
 
-
-
         localStorage.setItem('token', data.token);
+
+        // Update authentication state and redirect to dashboard
+        setIsLoggedIn(true);
+        setUserName(email);
         setLoading(false);
         navigate('/dashboard');
       }

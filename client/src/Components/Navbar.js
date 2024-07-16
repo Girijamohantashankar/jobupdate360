@@ -1,12 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/logo.png';
 import { AuthContext } from '../AuthContext';
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState('');
+  const { isLoggedIn, setIsLoggedIn, userName, setUserName } = useContext(AuthContext);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -34,7 +36,33 @@ function Navbar() {
     };
 
     fetchUserName();
+  }, [setIsLoggedIn, setUserName]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/');
+  };
+
+  const handleProfileIconClick = (e) => {
+    e.preventDefault();
+    setShowDropdown(!showDropdown);
+  };
+
+  // Close dropdown when clicking outside
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
+
   return (
     <div className="navbar_container">
       <div className="nav_bar">
@@ -47,12 +75,18 @@ function Navbar() {
         </div>
 
         <div className="nav_links">
-        <ul>
+          <ul>
             {isLoggedIn ? (
               <li className="user_profile">
-                <Link className="Link br_btn" to="/profile">
+                <span className="Link br_btn profile_icon" onClick={handleProfileIconClick}>
                   {userName.charAt(0).toUpperCase()}
-                </Link>
+                </span>
+                {showDropdown && (
+                  <div className="dropdown_menu" ref={dropdownRef}>
+                    <Link to="/profile" className="dropdown_item">Profile</Link>
+                    <div className="dropdown_item" onClick={handleLogout}>Logout</div>
+                  </div>
+                )}
               </li>
             ) : (
               <li>

@@ -58,11 +58,11 @@ function Dashboard() {
         </div>
       </div >
       <div className='dashboard_cards'>
-        <Link className='dashboard_card'>
+        <Link  className='dashboard_card'>
         <img src={people}  className='people_img'/>
           <p className='dashboard_card_title'>People Applied</p>
         </Link>
-        <Link className='dashboard_card'>
+        <Link to='/createJob' className='dashboard_card'>
           <img src={job} className='job_img' />
           <p className='dashboard_card_title'>Create Jobs</p>
         </Link>

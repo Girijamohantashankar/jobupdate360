@@ -37,12 +37,16 @@ function CreateJob() {
     setStep(2);
   };
 
+  const handleBack = () => {
+    setStep(1);
+  };
+
   const handleFinalSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     axios.post('http://localhost:5000/api/job/createJob', formData)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => {
         console.error('There was an error creating the job!', error);
@@ -244,6 +248,7 @@ function CreateJob() {
           setFormData={setFormData} 
           handleFinalSubmit={handleFinalSubmit} 
           loading={loading}
+          handleBack={handleBack}
         />
       )}
     </div>

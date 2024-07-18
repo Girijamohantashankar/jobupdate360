@@ -22,7 +22,8 @@ function CreateJob() {
     expireDate: '',
     description: '',
     selectionProcess: '',
-    applicationFee: ''
+    applicationFee: '',
+    technology: '',
   });
 
   const handleChange = (e) => {
@@ -237,6 +238,24 @@ function CreateJob() {
               required
             />
           </div>
+          <div className="form_group">
+              <label htmlFor="technology">Technology</label>
+              <select
+                id="technology"
+                value={formData.technology}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Technology</option>
+                <option value="React Js">React Js</option>
+                <option value="Angular">Angular</option>
+                <option value="Java">Java</option>
+                <option value="C++">C++</option>
+                <option value="Python">Python</option>
+                <option value="Vue js">Vue js</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
 
           <div className="form_group">
             <button type="submit">Next</button>

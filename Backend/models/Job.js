@@ -14,6 +14,9 @@ const jobSchema = new mongoose.Schema({
     description: String,
     selectionProcess: String,
     applicationFee: String,
+    technology: String,
+    websiteUrl: String,
+    detailsType: String,
 });
 const Job = mongoose.model('Job', jobSchema);
 

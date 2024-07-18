@@ -63,8 +63,6 @@ function Login() {
         }
 
         localStorage.setItem('token', data.token);
-
-        // Update authentication state and redirect to dashboard
         setIsLoggedIn(true);
         setUserName(email);
         setLoading(false);

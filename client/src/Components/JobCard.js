@@ -1,7 +1,10 @@
 import React from 'react';
+import { getRelativeTime } from './relativeTime';
 import './JobCard.css';
 
 function JobCard({ job, onClick, isActive }) {
+  const description = job.description.length > 100 ? job.description.slice(0, 100) + '...' : job.description;
+
   return (
     <div className={`card ${isActive ? 'active' : ''}`} onClick={onClick}>
       <div className='cards_text'>
@@ -17,11 +20,11 @@ function JobCard({ job, onClick, isActive }) {
         <p>{job.shift}</p>
       </div>
       <div className='card_des'>
-        <li>{job.description}</li>
+        <li>{description}</li>
+        {job.description.length > 100 && <span className='more_text'>more...</span>}
       </div>
       <div className='date_post'>
-        <p>{job.posted}</p>
-        <p>more...</p>
+        <p><b>Posted:</b> {getRelativeTime(job.applyDate)}</p>
       </div>
     </div>
   );

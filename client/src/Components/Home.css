@@ -206,3 +206,22 @@
 #FF1493 -- pink
 
 */
+
+.card_des {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* color: red; */
+}
+
+.card_des span.more_text {
+  display: inline;
+  color: blue;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 5px;
+}
+

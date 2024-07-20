@@ -1,0 +1,25 @@
+.card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .card.active {
+    background-color: #f0f0f0;
+  }
+  
+  .cards_text h2 {
+    margin: 0;
+  }
+  
+  .company_location span {
+    display: block;
+  }
+  
+  .cards_info p, .card_des li, .date_post p {
+    margin: 4px 0;
+  }
+  

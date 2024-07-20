@@ -12,8 +12,6 @@
   border: none;
 }
 
-
-
 .search_box_content {
   gap: 20px;
 }
@@ -28,7 +26,6 @@
 
 .job_search input,
 .job_location input {
-
   font-size: 15px;
   padding: 0 14px;
 }
@@ -57,7 +54,6 @@
 .job_search_btn button:hover {
   background-color: #087ef5;
 }
-
 
 .dropdown_container {
   display: flex;
@@ -108,8 +104,6 @@
   display: block;
 }
 
-
-/* job cards selection */
 .card {
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -127,8 +121,6 @@
 .cards_info {
   gap: 10px;
 }
-
-
 
 .card:hover {
   border: 1px solid #1E90FF;
@@ -163,9 +155,10 @@
   gap: 20px;
 }
 
-.cards{
+.cards {
   width: 30%;
 }
+
 .job_details {
   width: 40%;
   text-align: left;
@@ -181,7 +174,6 @@
 .cards_info,
 .cards {
   display: flex;
-
   align-items: center;
 }
 
@@ -200,7 +192,7 @@
   align-items: flex-start;
 }
 
-.job_details{
+.job_details {
   border: 1px solid #1E90FF;
 }
 

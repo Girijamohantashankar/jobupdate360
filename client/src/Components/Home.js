@@ -1,67 +1,79 @@
-import React, { useState } from 'react';
-import "./Home.css";
-
-const jobData = [
-  {
-    id: 1,
-    title: "Software Developer",
-    company: "Manthan IT Solutions",
-    location: "Mahajid Road, New Delhi",
-    salary: "₹12,224.77 - ₹17,659.06 a month",
-    type: "Full-Time",
-    shift: "Day Shift",
-    description: "As a backend developer you must have knowledge of the year",
-    posted: "Posted 2 days ago",
-    apply: "www.google.com"
-  },
-  {
-    id: 2,
-    title: "Frontend Developer",
-    company: "Tech Innovators",
-    location: "MG Road, Bangalore",
-    salary: "₹18,000.00 - ₹25,000.00 a month",
-    type: "Part-Time",
-    shift: "Night Shift",
-    description: "Proficiency in React.js and CSS",
-    posted: "Posted 7 days ago",
-    apply: "www.google.com"
-  },
-  // Add more job objects here if needed
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Home.css';
 
 function Home() {
+  const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedRemote, setSelectedRemote] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedPay, setSelectedPay] = useState("");
   const [selectedEducation, setSelectedEducation] = useState("");
-  const [selectedJob, setSelectedJob] = useState(null);
 
-  const filteredJobs = jobData.filter(job => {
-    const dateFilter = selectedDate ? job.posted.includes(selectedDate) : true;
-    const remoteFilter = selectedRemote ? job.location.includes(selectedRemote) : true;
-    const typeFilter = selectedType ? job.type === selectedType : true;
-    const payFilter = selectedPay ? parseFloat(job.salary.replace(/[^0-9.-]+/g, "")) >= parseFloat(selectedPay.replace(/[^0-9.-]+/g, "")) : true;
-    const educationFilter = selectedEducation ? job.description.includes(selectedEducation) : true;
-    return dateFilter && remoteFilter && typeFilter && payFilter && educationFilter;
-  });
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/job/allJobs');
+        setJobs(response.data);
+        setFilteredJobs(response.data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  useEffect(() => {
+    const results = jobs.filter(job => {
+      const matchesSearchTerm = (
+        (job.jobTitle && job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (job.companyName && job.companyName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (job.location && job.location.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+
+      const matchesDate = !selectedDate || (
+        selectedDate === "24 hours" && new Date(job.applyDate) >= new Date(Date.now() - 24 * 60 * 60 * 1000) ||
+        selectedDate === "7 days" && new Date(job.applyDate) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) ||
+        selectedDate === "30 days" && new Date(job.applyDate) >= new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+      );
+
+      const matchesRemote = !selectedRemote || job.jobType.toLowerCase().includes(selectedRemote.toLowerCase());
+      const matchesType = !selectedType || job.jobType.toLowerCase().includes(selectedType.toLowerCase());
+      const matchesPay = !selectedPay || parseInt(job.salary.replace(/[^0-9]/g, '')) >= parseInt(selectedPay);
+      const matchesEducation = !selectedEducation || job.qualification.toLowerCase().includes(selectedEducation.toLowerCase());
+
+      return matchesSearchTerm && matchesDate && matchesRemote && matchesType && matchesPay && matchesEducation;
+    });
+
+    setFilteredJobs(results);
+  }, [searchTerm, selectedDate, selectedRemote, selectedType, selectedPay, selectedEducation, jobs]);
 
   return (
     <div className='home_container'>
       <div className='search_box_content'>
         <div className='job_search'>
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input placeholder='Job title, keywords, or company' />
+          <input
+            placeholder='Job title, keywords, or company'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
         <div className='job_location'>
           <i className="fa-solid fa-location-dot"></i>
-          <input placeholder='Location' />
+          <input
+            placeholder='Location'
+            onChange={(e) => setSearchTerm(e.target.value)} 
+          />
         </div>
         <div className='job_search_btn'>
           <button>Search</button>
         </div>
       </div>
-      
       <div className='dropdown_container'>
         <div className='dropdown'>
           <div className='dropdown_selected'>{selectedDate || "Date of Post"}</div>
@@ -86,6 +98,9 @@ function Home() {
             <div onClick={() => setSelectedType("Part-Time")}>Part-time</div>
             <div onClick={() => setSelectedType("Contract")}>Contract</div>
             <div onClick={() => setSelectedType("Temporary")}>Temporary</div>
+            <div onClick={() => setSelectedType("IT")}>Temporary</div>
+            <div onClick={() => setSelectedType("Govt")}>Govt</div>
+            
           </div>
         </div>
         <div className='dropdown'>
@@ -112,29 +127,29 @@ function Home() {
 
       <div className='cards_content'>
         <div className='cards'>
-          {filteredJobs.map((job, index) => (
+          {filteredJobs.map((job) => (
             <div
-              key={index}
-              className={`card ${selectedJob?.id === job.id ? 'active' : ''}`}
+              key={job._id}
+              className={`card ${selectedJob?._id === job._id ? 'active' : ''}`}
               onClick={() => setSelectedJob(job)}
             >
               <div className='cards_text'>
-                <h2>{job.title}</h2>
+                <h2>{job.jobTitle}</h2>
                 <div className='company_location'>
-                  <span>{job.company}</span>
+                  <span>{job.companyName}</span>
                   <span>{job.location}</span>
                 </div>
               </div>
               <div className='cards_info'>
-                <p><b>{job.salary}</b></p>
-                <p>{job.type}</p>
-                <p>{job.shift}</p>
+                <p><b>Salary:</b> {job.salary}</p>
+                <p><b>Type:</b> {job.jobType}</p>
+                <p><b>Shift:</b> {job.Shift}</p>
               </div>
               <div className='card_des'>
                 <li>{job.description}</li>
               </div>
               <div className='date_post'>
-                <p>{job.posted}</p>
+                <p><b>Posted By:</b> {new Date(job.applyDate).toLocaleDateString()}</p>
                 <p>more...</p>
               </div>
             </div>
@@ -142,15 +157,17 @@ function Home() {
         </div>
         {selectedJob && (
           <div className='job_details'>
-            <h2>{selectedJob.title}</h2>
-            <p><b>Company:</b> {selectedJob.company}</p>
+            <h2>{selectedJob.jobTitle}</h2>
+            <p><b>Company:</b> {selectedJob.companyName}</p>
             <p><b>Location:</b> {selectedJob.location}</p>
             <p><b>Salary:</b> {selectedJob.salary}</p>
-            <button><b>Apply </b> {selectedJob.apply}</button>
-            <p><b>Type:</b> {selectedJob.type}</p>
-            <p><b>Shift:</b> {selectedJob.shift}</p>
+            <a href={selectedJob.websiteUrl} target='_blank' rel='noopener noreferrer'>
+              <button><b>Apply</b></button>
+            </a>
+            <p><b>Type:</b> {selectedJob.jobType}</p>
+            <p><b>Shift:</b> {selectedJob.Shift}</p>
             <p><b>Description:</b> {selectedJob.description}</p>
-            <p><b>Posted:</b> {selectedJob.posted}</p>
+            <p><b>Posted:</b> {new Date(selectedJob.applyDate).toLocaleDateString()}</p>
           </div>
         )}
       </div>

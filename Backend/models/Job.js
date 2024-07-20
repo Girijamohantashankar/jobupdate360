@@ -17,6 +17,7 @@ const jobSchema = new mongoose.Schema({
     technology: String,
     websiteUrl: String,
     detailsType: String,
+    Shift: String,
 });
 const Job = mongoose.model('Job', jobSchema);
 

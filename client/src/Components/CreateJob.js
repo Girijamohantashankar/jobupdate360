@@ -24,6 +24,7 @@ function CreateJob() {
     selectionProcess: '',
     applicationFee: '',
     technology: '',
+    Shift: '',
   });
 
   const handleChange = (e) => {
@@ -62,7 +63,7 @@ function CreateJob() {
       {step === 1 ? (
         <form className="create_job_form" onSubmit={handleNext}>
           <h2>Create Job</h2>
-          
+
           <div className="form_group">
             <div className="half_width">
               <label htmlFor="jobType">Job Type</label>
@@ -74,7 +75,10 @@ function CreateJob() {
               >
                 <option value="">Select Job Type</option>
                 <option value="IT">IT</option>
-                <option value="Govt">Govt.</option>
+                <option value="Govt">Govt</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Contract">Contract</option>
               </select>
             </div>
             <div className="half_width">
@@ -239,33 +243,49 @@ function CreateJob() {
             />
           </div>
           <div className="form_group">
-              <label htmlFor="technology">Technology</label>
-              <select
-                id="technology"
-                value={formData.technology}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Technology</option>
-                <option value="React Js">React Js</option>
-                <option value="Angular">Angular</option>
-                <option value="Java">Java</option>
-                <option value="C++">C++</option>
-                <option value="Python">Python</option>
-                <option value="Vue js">Vue js</option>
-                <option value="Others">Others</option>
-              </select>
-            </div>
+            <label htmlFor="technology">Technology</label>
+            <select
+              id="technology"
+              value={formData.technology}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Technology</option>
+              <option value="React Js">React Js</option>
+              <option value="Angular">Angular</option>
+              <option value="Java">Java</option>
+              <option value="C++">C++</option>
+              <option value="Python">Python</option>
+              <option value="Vue js">Vue js</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+
+          <div className="form_group">
+            <label htmlFor="Shift">Shift</label>
+            <select
+              id="Shift"
+              value={formData.Shift}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Shift</option>
+              <option value="Day Shift">Day Shift</option>
+              <option value="Night Shift">Night Shift</option>
+              <option value="Day/Night Shift">Day/Night Shift</option>
+            </select>
+          </div>
+
 
           <div className="form_group">
             <button type="submit">Next</button>
           </div>
         </form>
       ) : (
-        <AdditionalDetails 
-          formData={formData} 
-          setFormData={setFormData} 
-          handleFinalSubmit={handleFinalSubmit} 
+        <AdditionalDetails
+          formData={formData}
+          setFormData={setFormData}
+          handleFinalSubmit={handleFinalSubmit}
           loading={loading}
           handleBack={handleBack}
         />

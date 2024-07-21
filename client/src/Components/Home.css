@@ -28,6 +28,7 @@
 .job_location input {
   font-size: 15px;
   padding: 0 14px;
+  background-color: transparent;
 }
 
 .job_search input {
@@ -110,6 +111,7 @@
   padding: 0 10px;
   width: 400px;
   text-align: left;
+  background-color: #fff;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
@@ -153,6 +155,7 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-top: 20px;
 }
 
 .cards {
@@ -163,6 +166,13 @@
   width: 40%;
   text-align: left;
   padding: 0 20px;
+  border: 1px solid #1E90FF;
+  background-color: #fff;
+  border-radius: 5px;
+  position: sticky;
+  height: 100vh;
+  top: 65px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .cards {
@@ -192,9 +202,7 @@
   align-items: flex-start;
 }
 
-.job_details {
-  border: 1px solid #1E90FF;
-}
+
 
 
 
@@ -217,11 +225,10 @@
   /* color: red; */
 }
 
-.card_des span.more_text {
-  display: inline;
-  color: blue;
+.date_post {
+  color: rgb(66, 66, 197);
   cursor: pointer;
   font-weight: bold;
-  margin-left: 5px;
+  font-size: 13px;
 }
 

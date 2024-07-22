@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getRelativeTime } from "./relativeTime";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
   const [jobs, setJobs] = useState([]);
@@ -111,6 +111,7 @@ function Home() {
     }
   };
 
+//  let lala = `${selectedJob.webUrl}` 
   return (
     <div className="home_container">
       <div className="search_box_content">
@@ -213,8 +214,8 @@ function Home() {
               <div className="cards_text">
                 <h2>{job.jobTitle}</h2>
                 <div className="company_location">
-                  <span><i class="fa-solid fa-building"></i> {job.companyName}</span>
-                  <span><i class="fa-solid fa-location-dot"></i> {job.location}</span>
+                  <span><i className="fa-solid fa-building"></i> {job.companyName}</span>
+                  <span><i className="fa-solid fa-location-dot"></i> {job.location}</span>
                 </div>
               </div>
               <div className="cards_info">
@@ -229,7 +230,7 @@ function Home() {
                 </p>
               </div>
               <div className="card_des">
-                <li>{job.description}</li>
+                <span>{job.description}</span>
               </div>
               <div className="date_post">
                 <p>
@@ -243,9 +244,11 @@ function Home() {
         {selectedJob && (
           <div className="job_details">
             <h2>{selectedJob.jobTitle}</h2>
-            <p>
-              <b>Company:</b> {selectedJob.companyName}
-            </p>
+           
+              <p>
+                <b>Company:</b> {selectedJob.companyName}  <Link className="web_icon" to={selectedJob.webUrl} target="_blank"><i className="fas fa-external-link-alt"></i></Link>
+              </p>
+         
             <p>
               <b>Location:</b> {selectedJob.location}
             </p>
@@ -272,7 +275,7 @@ function Home() {
               <b>Shift:</b> {selectedJob.Shift}
             </p>
             <p><strong>Apply Date:</strong> {new Date(selectedJob.applyDate).toLocaleDateString()}</p>
-            <p><strong>Expire Date:</strong> {new Date(selectedJob.expireDate).toLocaleDateString()}</p>
+            <p><strong>Last Date:</strong> {new Date(selectedJob.expireDate).toLocaleDateString()}</p>
             <p><strong>Job Description:</strong></p>
             <p className="job_description">
               {selectedJob.description}

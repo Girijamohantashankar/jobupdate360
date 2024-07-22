@@ -25,6 +25,7 @@ function CreateJob() {
     applicationFee: '',
     technology: [],
     Shift: '',
+    webUrl: '',
   });
 
   const handleChange = (e) => {
@@ -205,10 +206,10 @@ function CreateJob() {
                 required
               >
                 <option value="">Select Salary</option>
-                <option value="15,000 - 20,000">15,000 - 20,000</option>
-                <option value="20,000 - 25,000">20,000 - 25,000</option>
-                <option value="25,000 - 30,000">25,000 - 30,000</option>
-                <option value="30,000 - 45,000">30,000 - 45,000</option>
+                <option value="₹15,000 - ₹20,000">₹15,000 - ₹20,000</option>
+                <option value="₹20,000 - ₹25,000">₹20,000 - ₹25,000</option>
+                <option value="₹25,000 - ₹30,000">₹25,000 - ₹30,000</option>
+                <option value="₹30,000 - ₹45,000">₹30,000 - ₹45,000</option>
                 <option value="5LPA - 10LPA">5LPA - 10LPA</option>
                 <option value="10LPA+ Above">10LPA+ Above</option>
               </select>
@@ -273,6 +274,7 @@ function CreateJob() {
               required
             />
           </div>
+
           <div className="form_group">
             <label htmlFor="technology">Technology</label>
             <select
@@ -320,6 +322,19 @@ function CreateJob() {
               <option value="Day/Night Shift">Day/Night Shift</option>
             </select>
           </div>
+          
+          <div className="form_group">
+            <label htmlFor="webUrl">Company Website</label>
+            <input
+              type="text"
+              id="webUrl"
+              value={formData.webUrl}
+              onChange={handleChange}
+              placeholder="Enter your company Website"
+              required
+            />
+          </div>
+
 
 
           <div className="form_group">

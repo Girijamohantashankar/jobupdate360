@@ -18,11 +18,12 @@ const jobSchema = new mongoose.Schema({
     websiteUrl: String,
     detailsType: String,
     Shift: String,
+    webUrl: String,
     Report: {
         type: Number,
         default: 0
       },
-});
+},{timestamps: true});
 const Job = mongoose.model('Job', jobSchema);
 
 module.exports = Job;

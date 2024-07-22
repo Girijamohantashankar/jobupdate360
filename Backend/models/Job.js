@@ -14,10 +14,14 @@ const jobSchema = new mongoose.Schema({
     description: String,
     selectionProcess: String,
     applicationFee: String,
-    technology: String,
+    technology: [String],
     websiteUrl: String,
     detailsType: String,
     Shift: String,
+    Report: {
+        type: Number,
+        default: 0
+      },
 });
 const Job = mongoose.model('Job', jobSchema);
 

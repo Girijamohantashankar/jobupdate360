@@ -23,7 +23,7 @@ function CreateJob() {
     description: '',
     selectionProcess: '',
     applicationFee: '',
-    technology: '',
+    technology: [],
     Shift: '',
   });
 
@@ -56,6 +56,23 @@ function CreateJob() {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const handleTechnologyChange = (e) => {
+    const value = e.target.value;
+    if (value && !formData.technology.includes(value)) {
+      setFormData({
+        ...formData,
+        technology: [...formData.technology, value]
+      });
+    }
+  };
+
+  const removeTechnology = (tech) => {
+    setFormData({
+      ...formData,
+      technology: formData.technology.filter(t => t !== tech)
+    });
   };
 
   return (
@@ -131,11 +148,19 @@ function CreateJob() {
                 <option value="">Select Qualification</option>
                 <option value="B.A">B.A</option>
                 <option value="B.Sc">B.Sc</option>
+                <option value="BTech/MCA/B.Sc">BTech/MCA/B.Sc</option>
+                <option value="MCA">MCA</option>
+                <option value="MCA">BTech</option>
                 <option value="B.Com">B.Com</option>
                 <option value="BBA">BBA</option>
                 <option value="BAF">BAF</option>
                 <option value="BBI">BBI</option>
                 <option value="BMS">BMS</option>
+                <option value="10th">10th</option>
+                <option value="Post Graduation">Post Graduation</option>
+                <option value="Any Graduation">Any Graduation</option>
+                <option value="Any Degree">Any Degree</option>
+                <option value="Others">Others</option>
               </select>
             </div>
             <div className="half_width">
@@ -150,6 +175,7 @@ function CreateJob() {
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
                 <option value="2023">2023</option>
+                <option value="others">others</option>
               </select>
             </div>
           </div>
@@ -179,7 +205,12 @@ function CreateJob() {
                 required
               >
                 <option value="">Select Salary</option>
-                <option value="Best in Industry">Best in Industry</option>
+                <option value="15,000 - 20,000">15,000 - 20,000</option>
+                <option value="20,000 - 25,000">20,000 - 25,000</option>
+                <option value="25,000 - 30,000">25,000 - 30,000</option>
+                <option value="30,000 - 45,000">30,000 - 45,000</option>
+                <option value="5LPA - 10LPA">5LPA - 10LPA</option>
+                <option value="10LPA+ Above">10LPA+ Above</option>
               </select>
             </div>
           </div>
@@ -246,9 +277,9 @@ function CreateJob() {
             <label htmlFor="technology">Technology</label>
             <select
               id="technology"
-              value={formData.technology}
-              onChange={handleChange}
-              required
+              value=""
+              onChange={handleTechnologyChange}
+              
             >
               <option value="">Select Technology</option>
               <option value="React Js">React Js</option>
@@ -259,6 +290,20 @@ function CreateJob() {
               <option value="Vue js">Vue js</option>
               <option value="Others">Others</option>
             </select>
+            <div className="selected_technologies">
+              {formData.technology.map((tech, index) => (
+                <span key={index} className="tech_item">
+                  {tech}
+                  <span
+                    type="button"
+                    className="remove_btn"
+                    onClick={() => removeTechnology(tech)}
+                  >
+                    &times;
+                  </span>
+                </span>
+              ))}
+            </div>
           </div>
 
           <div className="form_group">

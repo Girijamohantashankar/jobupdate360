@@ -46,13 +46,13 @@ function Home() {
         !selectedDate ||
         (selectedDate === "24 hours" &&
           new Date(job.applyDate) >=
-            new Date(Date.now() - 24 * 60 * 60 * 1000)) ||
+          new Date(Date.now() - 24 * 60 * 60 * 1000)) ||
         (selectedDate === "7 days" &&
           new Date(job.applyDate) >=
-            new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) ||
+          new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) ||
         (selectedDate === "30 days" &&
           new Date(job.applyDate) >=
-            new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+          new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
 
       const matchesRemote =
         !selectedRemote ||
@@ -213,8 +213,8 @@ function Home() {
               <div className="cards_text">
                 <h2>{job.jobTitle}</h2>
                 <div className="company_location">
-                  <span>{job.companyName}</span>
-                  <span>{job.location}</span>
+                  <span><i class="fa-solid fa-building"></i> {job.companyName}</span>
+                  <span><i class="fa-solid fa-location-dot"></i> {job.location}</span>
                 </div>
               </div>
               <div className="cards_info">
@@ -262,17 +262,30 @@ function Home() {
               </button>
             </a> */}
             <div className='apply_button'>
-        <button onClick={() => handleApplyClick(selectedJob.websiteUrl)}>Apply Now</button>
-      </div>
+              <button onClick={() => handleApplyClick(selectedJob.websiteUrl)}>Apply Now</button>
+            </div>
             <p>
               <b>Type:</b> {selectedJob.jobType}
             </p>
+            <p><strong>Qualification:</strong> {selectedJob.qualification}</p>
             <p>
               <b>Shift:</b> {selectedJob.Shift}
             </p>
-            <p>
-              <b>Description:</b> {selectedJob.description}
+            <p><strong>Apply Date:</strong> {new Date(selectedJob.applyDate).toLocaleDateString()}</p>
+            <p><strong>Expire Date:</strong> {new Date(selectedJob.expireDate).toLocaleDateString()}</p>
+            <p><strong>Job Description:</strong></p>
+            <p className="job_description">
+              {selectedJob.description}
             </p>
+            <p><strong>Selection Process:</strong></p>
+            <p className="job_description">{selectedJob.selectionProcess}</p>
+            <p><strong>Technology:</strong> {selectedJob.technology.join(', ')}</p>
+            <p><strong>Shift:</strong> {selectedJob.Shift}</p>
+            <p><strong>Application Fee:</strong> {selectedJob.applicationFee}</p>
+
+
+
+
             <p>
               <b>Posted:</b> {getRelativeTime(selectedJob.applyDate)}
             </p>

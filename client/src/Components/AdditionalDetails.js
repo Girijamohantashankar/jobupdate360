@@ -28,8 +28,13 @@ function AdditionalDetails({ formData, setFormData, handleBack }) {
 
     setTimeout(async () => {
       try {
-        const response = await axios.post('http://localhost:5000/api/job/createJob', completeFormData);
-        console.log('Job created:', response.data);
+        let config={
+          headers:{
+            "Authorization": 'Bearer '+localStorage.getItem('token'),
+          }
+        }
+        const response = await axios.post('http://localhost:5000/api/job/createJob', completeFormData, config);
+        // console.log('Job created:', response.data);
         toast.success('Job created successfully!');
         setIsLoading(false);
         navigate('/dashboard'); 

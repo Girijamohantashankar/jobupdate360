@@ -10,34 +10,25 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if all fields are provided
     if (!email || !password) {
       return res.status(400).json({ message: 'Please fill in all fields' });
     }
-
-    // Check if user exists
     let user = await User.findOne({ email });
     if (!user) {
       console.error('User not found');
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
-    // Check if password matches
     const isMatch = await bcrypt.compare(password, user.password);
     console.log(isMatch);
     if (!isMatch) {
       console.error('Password does not match');
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
-    // Create JWT payload
     const payload = {
       user: {
         id: user.id,
       },
     };
-
-    // Sign JWT and return token
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' }, (err, token) => {
       if (err) {
         console.error('JWT signing error:', err);
@@ -59,26 +50,18 @@ router.post('/signup', async (req, res) => {
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Please fill in all fields' });
     }
-
-    // Check if user already exists
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
-
-    // Create new user
     user = new User({ name, email, password });
     await user.save();
-
-    // Create JWT payload
     const payload = {
       user: {
         id: user.id,
       },
     };
-
-    // Sign JWT and return token
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' }, (err, token) => {
+    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3d' }, (err, token) => {
       if (err) throw err;
       res.status(201).json({ token, message: 'User created successfully' });
     });
@@ -90,8 +73,5 @@ router.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
-
-
 
 module.exports = router;

@@ -47,7 +47,14 @@ function CreateJob() {
   const handleFinalSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios.post('http://localhost:5000/api/job/createJob', formData)
+
+    const authHeader = {
+      Authorization: 'Bearer '+localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+    };
+
+
+    axios.post('http://localhost:5000/api/job/createJob', authHeader)
       .then(response => {
         // console.log(response.data);
       })

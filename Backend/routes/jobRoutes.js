@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const authMiddleware = require('../middleware/authMiddleware');
 const Job = require('../models/Job');
 const cron = require('node-cron');
 
 
-router.post('/createJob', async (req, res) => {
-  const job = new Job(req.body);
+router.post('/createJob', authMiddleware, async (req, res) => {
+  let newObject={...req.body, createdBy:req.user.id};
+
+  const job = new Job(newObject);
   try {
     const saveJob = await job.save();
     res.status(201).json(saveJob);
@@ -26,13 +29,11 @@ async function deleteExpiredJobs() {
     for (const job of expiredJobs) {
       await job.deleteOne(); // Use deleteOne method
     }
-
     console.log('Expired job deletion completed.');
   } catch (error) {
     console.error('Error running expired job deletion:', error);
   }
 }
-
 // Schedule the job to run at midnight every day
 cron.schedule('0 18 * * *', deleteExpiredJobs);
 

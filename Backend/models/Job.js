@@ -19,6 +19,7 @@ const jobSchema = new mongoose.Schema({
     detailsType: String,
     Shift: String,
     webUrl: String,
+    createdBy:String,
     Report: {
         type: Number,
         default: 0

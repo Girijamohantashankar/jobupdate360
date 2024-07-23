@@ -21,7 +21,7 @@ function App() {
     <div>
       {showNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route exact  path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />

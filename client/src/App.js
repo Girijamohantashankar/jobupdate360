@@ -10,6 +10,7 @@ import NotFound from './Components/NotFound';
 import { AuthContext } from './AuthContext'; // Import AuthContext
 import CreateJob from './Components/CreateJob';
 import CustomForm from './Components/CustomForm';
+import ViewJobs from './Components/ViewJobs';
 
 function App() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function App() {
         <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
         <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/createJob" element={isLoggedIn ? <CreateJob /> : <Navigate to="/login" />} />
+        <Route path="/viewJobs" element={isLoggedIn ? <ViewJobs /> : <Navigate to="/login" />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/customform" element={<CustomForm />} />
       </Routes>

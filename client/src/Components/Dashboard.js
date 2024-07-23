@@ -3,6 +3,7 @@ import './Dashboard.css';
 import { Link } from 'react-router-dom';
 import job from "../assets/job.png";
 import people from "../assets/people.png";
+import jobview from "../assets/jobview.png";
 
 function Dashboard() {
   const [greeting, setGreeting] = useState('');
@@ -65,6 +66,10 @@ function Dashboard() {
         <Link to='/createJob' className='dashboard_card'>
           <img src={job} className='job_img' />
           <p className='dashboard_card_title'>Create Jobs</p>
+        </Link>
+        <Link to='/viewJobs' className='dashboard_card'>
+          <img src={jobview} className='job_img' />
+          <p className='dashboard_card_title'>View Jobs</p>
         </Link>
       </div>
     </>

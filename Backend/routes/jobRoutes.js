@@ -7,7 +7,6 @@ const cron = require('node-cron');
 
 router.post('/createJob', authMiddleware, async (req, res) => {
   let newObject={...req.body, createdBy:req.user.id};
-
   const job = new Job(newObject);
   try {
     const saveJob = await job.save();
@@ -35,7 +34,7 @@ async function deleteExpiredJobs() {
   }
 }
 // Schedule the job to run at midnight every day
-cron.schedule('0 18 * * *', deleteExpiredJobs);
+cron.schedule('0 0 * * *', deleteExpiredJobs);
 
 
 //  get all jobs

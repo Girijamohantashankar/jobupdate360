@@ -1,4 +1,25 @@
-.viewJob_container{
+/* ViewJobs.css */
+
+.viewJob_container {
     margin-top: 100px;
-    color: red;
-}
+    padding: 20px;
+  }
+  
+  .job_card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job_card h3 {
+    margin: 0;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .job_card p {
+    margin: 5px 0;
+  }
+  

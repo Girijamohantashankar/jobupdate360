@@ -19,7 +19,7 @@ const jobSchema = new mongoose.Schema({
     detailsType: String,
     Shift: String,
     webUrl: String,
-    createdBy:String,
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     Report: {
         type: Number,
         default: 0

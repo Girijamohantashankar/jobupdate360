@@ -8,7 +8,6 @@ const cron = require('node-cron');
 router.post('/createJob', authMiddleware, async (req, res) => {
   let newObject={...req.body, createdBy:req.user.id};
   const job = new Job(newObject);
-  console.log(job);
   try {
     const saveJob = await job.save();
     res.status(201).json(saveJob);
@@ -48,21 +47,21 @@ router.get('/allJobs', async (req, res) => {
   }
 });
 
-// GET all jobs created by a specific user
-router.get('/jobsByUser', async (req, res) => {
-  const userId = req.query.userId; // Fetch userId from query parameter
-  
+// GET /jobsByUser - Get jobs created by the authenticated user
+router.get('/jobsByUser', authMiddleware, async (req, res) => {
   try {
-    // Fetch jobs created by the specified user (userId)
+    // Retrieve the user ID from req.user
+    const userId = req.user.id;
+    console.log(userId);
+
+    // Query jobs created by the user, sorted by createdAt in descending order
     const jobs = await Job.find({ createdBy: userId }).sort({ createdAt: -1 });
-    
-    // Log the fetched jobs to console
-    console.log("Jobs fetched:", jobs);
-    
-    // Send the jobs as JSON response
+
+    // Return the jobs as JSON response
     res.json(jobs);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Error fetching jobs:", err.message);
+    res.status(500).json({ message: "Failed to fetch jobs" });
   }
 });
 

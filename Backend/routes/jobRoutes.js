@@ -6,12 +6,17 @@ const cron = require('node-cron');
 
 
 router.post('/createJob', authMiddleware, async (req, res) => {
-  let newObject={...req.body, createdBy:req.user.id};
-  const job = new Job(newObject);
   try {
+    const jobData = {
+      ...req.body,
+      createdBy: req.user.id
+    };
+    console.log(jobData);
+
+    const job = new Job(jobData);
     const saveJob = await job.save();
+
     res.status(201).json(saveJob);
-    
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -33,7 +38,6 @@ async function deleteExpiredJobs() {
     console.error('Error running expired job deletion:', error);
   }
 }
-// Schedule the job to run at midnight every day
 cron.schedule('0 0 * * *', deleteExpiredJobs);
 
 
@@ -47,23 +51,28 @@ router.get('/allJobs', async (req, res) => {
   }
 });
 
-// GET /jobsByUser - Get jobs created by the authenticated user
-router.get('/jobsByUser', authMiddleware, async (req, res) => {
+
+// User JobPosts
+router.get('/userPosts', authMiddleware, async (req, res) => {
   try {
-    // Retrieve the user ID from req.user
-    const userId = req.user.id;
-    console.log(userId);
-
-    // Query jobs created by the user, sorted by createdAt in descending order
-    const jobs = await Job.find({ createdBy: userId }).sort({ createdAt: -1 });
-
-    // Return the jobs as JSON response
-    res.json(jobs);
-  } catch (err) {
-    console.error("Error fetching jobs:", err.message);
-    res.status(500).json({ message: "Failed to fetch jobs" });
+    const userId = req.user.id; 
+    // console.log(userId);
+    
+    const jobs = await Job.find({ createdBy: userId });
+    if (!jobs) {
+      return res.status(404).json({ message: 'No jobs found for this user' });
+    }
+    res.json({ jobs });
+  } catch (error) {
+    console.error('Error in /userPosts route:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
+
+
+
+
+
 
 
 

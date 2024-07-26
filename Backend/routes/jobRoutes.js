@@ -4,8 +4,9 @@ const authMiddleware = require('../middleware/authMiddleware');
 const Job = require('../models/Job');
 const cron = require('node-cron');
 
-
+// create jobs
 router.post('/createJob', authMiddleware, async (req, res) => {
+  console.log(req.body);
   try {
     const jobData = {
       ...req.body,
@@ -22,6 +23,7 @@ router.post('/createJob', authMiddleware, async (req, res) => {
   }
 });
 
+// Job post deleted automatically
 async function deleteExpiredJobs() {
   console.log('Cron job started at:', new Date().toLocaleString());
   try {
@@ -55,9 +57,9 @@ router.get('/allJobs', async (req, res) => {
 // User JobPosts
 router.get('/userPosts', authMiddleware, async (req, res) => {
   try {
-    const userId = req.user.id; 
+    const userId = req.user.id;
     // console.log(userId);
-    
+
     const jobs = await Job.find({ createdBy: userId });
     if (!jobs) {
       return res.status(404).json({ message: 'No jobs found for this user' });
@@ -69,6 +71,77 @@ router.get('/userPosts', authMiddleware, async (req, res) => {
   }
 });
 
+// DELETE job by id
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const job = await Job.findByIdAndDelete(req.params.id);
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+    if (job.createdBy.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+  } catch (error) {
+    console.error('Error in DELETE /job/:id route:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
+
+// User JOB Post
+router.get('/EditJob/:id', authMiddleware, async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+    if (job.createdBy.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    res.json({ job });
+
+  } catch (error) {
+    console.error('Error in GET /EditJob/:id route:', error); 
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
+
+router.post('/updateEdit/:id', authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const {jobData} = req.body;
+
+console.log(jobData);
+  
+  try {
+    // Find the job by ID
+    const job = await Job.findByIdAndUpdate(id,jobData);
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    // Check if the user is authorized to update this job
+    if (job.createdBy.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    // Update the job with new data
+    Object.assign(job, jobData);
+
+    // Save the updated job
+    await job.save();
+
+    // Return the updated job
+    res.json({ message: 'Job updated successfully', job });
+  } catch (error) {
+    console.error('Error in PUT /EditJob/:id route:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 
 

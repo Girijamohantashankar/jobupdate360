@@ -3,6 +3,7 @@ import axios from "axios";
 import { getRelativeTime } from "./relativeTime";
 import "./Home.css";
 import { Link, useNavigate } from "react-router-dom";
+// import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 function Home() {
   const [jobs, setJobs] = useState([]);
@@ -16,6 +17,7 @@ function Home() {
   const [selectedType, setSelectedType] = useState("");
   const [selectedPay, setSelectedPay] = useState("");
   const [selectedEducation, setSelectedEducation] = useState("");
+  
   const navigate = useNavigate();
   useEffect(() => {
     const fetchJobs = async () => {
@@ -31,6 +33,20 @@ function Home() {
     };
     fetchJobs();
   }, []);
+
+//   const getRelativeTime = (dateString) => {
+//     try {
+//         const date = new Date(dateString);
+//         if (isNaN(date.getTime())) {
+//             throw new Error('Invalid date');
+//         }
+//         return formatDistanceToNow(date, { addSuffix: true });
+//     } catch (error) {
+//         console.error('Invalid date format:', dateString, error);
+//         return 'Invalid date';
+//     }
+// };
+
 
   useEffect(() => {
     const results = jobs.filter((job) => {

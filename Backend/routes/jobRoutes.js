@@ -58,8 +58,6 @@ router.get('/allJobs', async (req, res) => {
 router.get('/userPosts', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
-    // console.log(userId);
-
     const jobs = await Job.find({ createdBy: userId });
     if (!jobs) {
       return res.status(404).json({ message: 'No jobs found for this user' });
@@ -109,17 +107,13 @@ router.get('/EditJob/:id', authMiddleware, async (req, res) => {
 });
 
 
-
-
 router.post('/updateEdit/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
-  const {jobData} = req.body;
+  const jobData = req.body;
 
-console.log(jobData);
-  
   try {
-    // Find the job by ID
-    const job = await Job.findByIdAndUpdate(id,jobData);
+    // Find the job by ID and update
+    const job = await Job.findById(id);
     if (!job) {
       return res.status(404).json({ message: 'Job not found' });
     }
@@ -142,6 +136,7 @@ console.log(jobData);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 
 

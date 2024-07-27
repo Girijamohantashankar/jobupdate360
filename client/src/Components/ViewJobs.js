@@ -60,11 +60,6 @@ function ViewJobs() {
     }
   };
   
-
-  const handleEdit = (id) => {
-    console.log(`Edit job with id: ${id}`);
-  };
-
   const handleShowModal = (id) => {
     setJobToDelete(id);
     setShowModal(true);

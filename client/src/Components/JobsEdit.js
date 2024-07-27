@@ -17,10 +17,12 @@ function JobEdit() {
         const fetchJobData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:5000/api/job/EditJob/${id}`,{ headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                  }});
+                const response = await axios.get(`http://localhost:5000/api/job/EditJob/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
                 setJobData(response.data.job);
                 // console.log(response.data.job);
             } catch (error) {
@@ -52,10 +54,12 @@ function JobEdit() {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            await axios.post(`http://localhost:5000/api/job/updateEdit/${id}`, jobData,{ headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-              }});
+            await axios.put(`http://localhost:5000/api/job/updateEdit/${id}`, jobData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
             alert('Job updated successfully');
         } catch (error) {
             console.error('Error updating job:', error);
@@ -63,6 +67,7 @@ function JobEdit() {
             setLoading(false);
         }
     };
+
 
     const handleNext = () => {
         setStep(step + 1);

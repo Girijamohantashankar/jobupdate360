@@ -4,11 +4,13 @@ import './CreateJob.css';
 import AdditionalDetailsEdit from './AdditionalDetailsEdit';
 import usePreventBackNavigation from './usePreventBackNavigation';
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function JobEdit() {
     usePreventBackNavigation();
 
-    const { id } = useParams(); // Get the job ID from the route parameters
+    const { id } = useParams();
     const [jobData, setJobData] = useState(null);
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -23,8 +25,10 @@ function JobEdit() {
                         'Content-Type': 'application/json'
                     }
                 });
-                setJobData(response.data.job);
-                // console.log(response.data.job);
+                const job = response.data.job;
+                job.applyDate = job.applyDate ? new Date(job.applyDate).toISOString().split('T')[0] : '';
+                job.expireDate = job.expireDate ? new Date(job.expireDate).toISOString().split('T')[0] : '';
+                setJobData(job);
             } catch (error) {
                 console.error('Error fetching job data:', error);
             }
@@ -49,18 +53,26 @@ function JobEdit() {
         setJobData({ ...jobData, technology: jobData.technology.filter(t => t !== tech) });
     };
 
-    const handleSubmit = async (e) => {
+    const handleNext = (e) => {
         e.preventDefault();
+        setStep(2);
+    };
+
+    const handleBack = () => {
+        setStep(step - 1);
+    };
+
+    const handleFinalSubmit = async (formData) => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:5000/api/job/updateEdit/${id}`, jobData, {
+            await axios.put(`http://localhost:5000/api/job/updateEdit/${id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             });
-            alert('Job updated successfully');
+            toast.success('Job updated successfully');
         } catch (error) {
             console.error('Error updating job:', error);
         } finally {
@@ -68,25 +80,11 @@ function JobEdit() {
         }
     };
 
-
-    const handleNext = () => {
-        setStep(step + 1);
-    };
-
-    const handleBack = () => {
-        setStep(step - 1);
-    };
-
-    const handleFinalSubmit = async () => {
-        // Implement the final submit logic if necessary
-    };
-
-    // console.log(jobData,'fwguafhai');
-
     return (
         <div className="create_job">
+        <ToastContainer />
             {step === 1 ? (
-                <form className="create_job_form" onSubmit={handleSubmit}>
+                <form className="create_job_form" onSubmit={handleNext}>
                     <h2>Edit Your Job</h2>
 
                     <div className="form_group">
@@ -299,7 +297,7 @@ function JobEdit() {
                             <option value="Others">Others</option>
                         </select>
                         <div className="selected_technologies">
-                            {/* {jobData?.technology.map((tech, index) => (
+                            {jobData?.technology.map((tech, index) => (
                                 <span key={index} className="tech_item">
                                     {tech}
                                     <span
@@ -310,7 +308,7 @@ function JobEdit() {
                                         &times;
                                     </span>
                                 </span>
-                            ))} */}
+                            ))}
                         </div>
                     </div>
 
@@ -342,13 +340,13 @@ function JobEdit() {
                     </div>
 
                     <div className="form_group">
-                        <button type="submit" onClick={handleSubmit}>Next</button>
+                        <button type="submit">Next</button>
                     </div>
                 </form>
             ) : (
                 <AdditionalDetailsEdit
-                    jobData={jobData}
-                    setJobData={setJobData}
+                    formData={jobData}
+                    setFormData={setJobData}
                     handleFinalSubmit={handleFinalSubmit}
                     loading={loading}
                     handleBack={handleBack}

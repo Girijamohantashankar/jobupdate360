@@ -85,9 +85,6 @@ router.delete('/:id', authMiddleware, async (req, res) => {
   }
 });
 
-
-
-
 // User JOB Post
 router.get('/EditJob/:id', authMiddleware, async (req, res) => {
   try {
@@ -106,36 +103,32 @@ router.get('/EditJob/:id', authMiddleware, async (req, res) => {
   }
 });
 
-
-router.post('/updateEdit/:id', authMiddleware, async (req, res) => {
+// Job UPdate by ID/user Login
+router.put('/updateEdit/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const jobData = req.body;
 
   try {
-    // Find the job by ID and update
     const job = await Job.findById(id);
     if (!job) {
       return res.status(404).json({ message: 'Job not found' });
     }
 
-    // Check if the user is authorized to update this job
     if (job.createdBy.toString() !== req.user.id) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    // Update the job with new data
     Object.assign(job, jobData);
-
-    // Save the updated job
     await job.save();
 
-    // Return the updated job
     res.json({ message: 'Job updated successfully', job });
   } catch (error) {
-    console.error('Error in PUT /EditJob/:id route:', error);
+    console.error('Error in PUT /updateEdit/:id route:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+
 
 
 

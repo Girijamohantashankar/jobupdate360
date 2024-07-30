@@ -1,4 +1,105 @@
-h1{
-    margin-top: 100px;
-    color: red;
+.form-container {
+    width: 50%;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.font_12 {
+    font-size: 17px;
+}
+
+.step-container {
+    display: none;
+}
+
+.step-container.active {
+    display: block;
+}
+
+button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.progress-bar-fill {
+    height: 10px;
+    width: 0;
+    background-color: #007bff;
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.modal h2 {
+    margin: 0 0 20px 0;
+}
+
+.modal button {
+    background-color: #28a745;
+}
+
+.form_fill {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form_fill input,
+.form_fill select {
+    height: 37px;
+    border: 1px solid #838080;
+    outline: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.form_fill select {
+    cursor: pointer;
+}
+
+.form_fill input:hover,
+.form_fill input:focus,
+.form_fill select:hover,
+.form_fill select:focus {
+    border: 1px solid #007bff;
+}
+
+.btn_container {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
 }

@@ -69,7 +69,7 @@ function Dashboard() {
         </Link>
         <Link to='/viewJobs' className='dashboard_card'>
           <img src={jobview} className='job_img' />
-          <p className='dashboard_card_title'>View Jobs</p>
+          <p className='dashboard_card_title'>View Posts</p>
         </Link>
       </div>
     </>

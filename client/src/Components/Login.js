@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import Loader from './Loader';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContext } from '../AuthContext'; // Import AuthContext
+import { AuthContext } from '../AuthContext';
 
 function Login() {
-  const { setIsLoggedIn, setUserName } = useContext(AuthContext); // Use AuthContext to set authentication state
+  const { setIsLoggedIn, setUserName } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -38,6 +38,26 @@ function Login() {
     }
 
     try {
+      const adminResponse = await fetch('http://localhost:5000/api/auth/admin-login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const adminData = await adminResponse.json();
+
+      if (adminResponse.ok) {
+        toast.success(adminData.message || 'Admin login successful!');
+        setLoading(false);
+        setIsLoggedIn(true);
+        setUserName(email);
+        navigate('/admin');
+        return;
+      }
+
+
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {

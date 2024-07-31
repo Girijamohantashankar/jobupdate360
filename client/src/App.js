@@ -7,15 +7,16 @@ import Login from './Components/Login';
 import Profile from './Components/Profile';
 import Dashboard from './Components/Dashboard';
 import NotFound from './Components/NotFound';
-import { AuthContext } from './AuthContext'; // Import AuthContext
+import { AuthContext } from './AuthContext'; 
 import CreateJob from './Components/CreateJob';
 import CustomForm from './Components/CustomForm';
 import ViewJobs from './Components/ViewJobs';
 import JobsEdit from './Components/JobsEdit';
+import Admin from './AdminPage/Admin';
 
 function App() {
   const location = useLocation();
-  const { isLoggedIn } = useContext(AuthContext); // Get the authentication state from the context
+  const { isLoggedIn } = useContext(AuthContext); 
 
   const showNavbar = location.pathname !== '/login' && location.pathname !== '/signup';
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/viewJobs/EditJob/:id" element={isLoggedIn ? <JobsEdit /> : <Navigate to="/login" />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/customform" element={<CustomForm />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );

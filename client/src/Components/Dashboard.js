@@ -59,16 +59,16 @@ function Dashboard() {
         </div>
       </div >
       <div className='dashboard_cards'>
-        <Link  className='dashboard_card'>
-        <img src={people}  className='people_img'/>
+        <Link className='dashboard_card'>
+          <img src={people} className='people_img' alt='png'/>
           <p className='dashboard_card_title'>People Applied</p>
         </Link>
         <Link to='/createJob' className='dashboard_card'>
-          <img src={job} className='job_img' />
+          <img src={job} className='job_img' alt='png' />
           <p className='dashboard_card_title'>Create Jobs</p>
         </Link>
         <Link to='/viewJobs' className='dashboard_card'>
-          <img src={jobview} className='job_img' />
+          <img src={jobview} className='job_img' alt='png'/>
           <p className='dashboard_card_title'>View Posts</p>
         </Link>
       </div>

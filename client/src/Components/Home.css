@@ -249,8 +249,16 @@
   background-color: #0754a1fd;
 }
 
-
-
+.card_title_head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card_title_head i{
+  font-size: 20px;
+  cursor: pointer;
+  padding-top: 6px;
+}
 
 
 

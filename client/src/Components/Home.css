@@ -175,6 +175,7 @@
   /* height: 100vh; */
   top: 65px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-bottom: 20px;
 }
 
 .cards {
@@ -249,20 +250,45 @@
   background-color: #0754a1fd;
 }
 
-.card_title_head{
+.card_title_head {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.card_title_head i{
+
+.card_title_head i {
   font-size: 20px;
   cursor: pointer;
   padding-top: 6px;
 }
 
+.job_description_details {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  height: 400px;
+  overflow: auto;
+}
 
-
-
+.report_icon {
+  background-color: #ddd;
+  padding: 9px 10px;
+  width: 114px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  font-size: bold;
+  font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+}
+.report_icon:hover{
+background-color: #e4e4e4;
+}
+.report_jobs {
+  margin: 10px auto;
+}
 
 
 

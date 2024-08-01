@@ -3,7 +3,9 @@ import axios from "axios";
 import { getRelativeTime } from "./relativeTime";
 import "./Home.css";
 import { Link, useNavigate } from "react-router-dom";
-// import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import ReportModal from './ReportModal';
+
+
 
 function Home() {
   const [jobs, setJobs] = useState([]);
@@ -17,7 +19,8 @@ function Home() {
   const [selectedType, setSelectedType] = useState("");
   const [selectedPay, setSelectedPay] = useState("");
   const [selectedEducation, setSelectedEducation] = useState("");
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const navigate = useNavigate();
   useEffect(() => {
     const fetchJobs = async () => {
@@ -34,18 +37,6 @@ function Home() {
     fetchJobs();
   }, []);
 
-//   const getRelativeTime = (dateString) => {
-//     try {
-//         const date = new Date(dateString);
-//         if (isNaN(date.getTime())) {
-//             throw new Error('Invalid date');
-//         }
-//         return formatDistanceToNow(date, { addSuffix: true });
-//     } catch (error) {
-//         console.error('Invalid date format:', dateString, error);
-//         return 'Invalid date';
-//     }
-// };
 
 
   useEffect(() => {
@@ -127,7 +118,14 @@ function Home() {
     }
   };
 
-//  let lala = `${selectedJob.webUrl}` 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="home_container">
       <div className="search_box_content">
@@ -260,54 +258,50 @@ function Home() {
         {selectedJob && (
           <div className="job_details">
             <h2>{selectedJob.jobTitle}</h2>
-           
-              <p>
-                <b>Company:</b> {selectedJob.companyName}  <Link className="web_icon" to={selectedJob.webUrl} target="_blank"><i className="fas fa-external-link-alt"></i></Link>
-              </p>
-         
+
+            <p>
+              <b>Company:</b> {selectedJob.companyName}  <Link className="web_icon" to={selectedJob.webUrl} target="_blank"><i className="fas fa-external-link-alt"></i></Link>
+            </p>
+
             <p>
               <b>Location:</b> {selectedJob.location}
             </p>
             <p>
               <b>Salary:</b> {selectedJob.salary}
             </p>
-            {/* <a
-              href={selectedJob.websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button>
-                <b>Apply</b>
-              </button>
-            </a> */}
             <div className='apply_button'>
               <button onClick={() => handleApplyClick(selectedJob.websiteUrl)}>Apply Now</button>
             </div>
-            <p>
-              <b>Type:</b> {selectedJob.jobType}
-            </p>
-            <p><strong>Qualification:</strong> {selectedJob.qualification}</p>
-            <p>
-              <b>Shift:</b> {selectedJob.Shift}
-            </p>
-            <p><strong>Apply Date:</strong> {new Date(selectedJob.applyDate).toLocaleDateString()}</p>
-            <p><strong>Last Date:</strong> {new Date(selectedJob.expireDate).toLocaleDateString()}</p>
-            <p><strong>Job Description:</strong></p>
-            <p className="job_description">
-              {selectedJob.description}
-            </p>
-            <p><strong>Selection Process:</strong></p>
-            <p className="job_description">{selectedJob.selectionProcess}</p>
-            <p><strong>Technology:</strong> {selectedJob.technology.join(', ')}</p>
-            <p><strong>Shift:</strong> {selectedJob.Shift}</p>
-            <p><strong>Application Fee:</strong> {selectedJob.applicationFee}</p>
-
-
-
-
-            <p>
-              <b>Posted:</b> {getRelativeTime(selectedJob.applyDate)}
-            </p>
+            <div className="job_description_details">
+              <p>
+                <b>Type:</b> {selectedJob.jobType}
+              </p>
+              <p><strong>Qualification:</strong> {selectedJob.qualification}</p>
+              <p>
+                <b>Shift:</b> {selectedJob.Shift}
+              </p>
+              <p><strong>Apply Date:</strong> {new Date(selectedJob.applyDate).toLocaleDateString()}</p>
+              <p><strong>Last Date:</strong> {new Date(selectedJob.expireDate).toLocaleDateString()}</p>
+              <p><strong>Job Description:</strong></p>
+              <p className="job_description">
+                {selectedJob.description}
+              </p>
+              <p><strong>Selection Process:</strong></p>
+              <p className="job_description">{selectedJob.selectionProcess}</p>
+              <p><strong>Technology:</strong> {selectedJob.technology.join(', ')}</p>
+              <p><strong>Shift:</strong> {selectedJob.Shift}</p>
+              <p><strong>Application Fee:</strong> {selectedJob.applicationFee}</p>
+              <p>
+                <b>Posted:</b> {getRelativeTime(selectedJob.applyDate)}
+              </p>
+            </div>
+            <div className="report_jobs">
+              <div className="report_icon" onClick={handleOpenModal}>
+                <span><i class="fa-solid fa-flag"></i></span>
+                <span>Report job</span>
+              </div>
+            </div>
+            <ReportModal isOpen={isModalOpen} onClose={handleCloseModal}  job_id={selectedJob._id} />
           </div>
         )}
       </div>

@@ -6,13 +6,12 @@ const cron = require('node-cron');
 
 // create jobs
 router.post('/createJob', authMiddleware, async (req, res) => {
-  console.log(req.body);
   try {
     const jobData = {
       ...req.body,
       createdBy: req.user.id
     };
-    console.log(jobData);
+  
 
     const job = new Job(jobData);
     const saveJob = await job.save();
@@ -25,17 +24,17 @@ router.post('/createJob', authMiddleware, async (req, res) => {
 
 // Job post deleted automatically
 async function deleteExpiredJobs() {
-  console.log('Cron job started at:', new Date().toLocaleString());
+  // console.log('Cron job started at:', new Date().toLocaleString());
   try {
     const currentDate = new Date();
-    console.log(currentDate, 'currentDate');
+    // console.log(currentDate, 'currentDate');
     const expiredJobs = await Job.find({ expireDate: { $lt: currentDate } });
 
-    console.log('Found expired jobs:', expiredJobs);
+    // console.log('Found expired jobs:', expiredJobs);
     for (const job of expiredJobs) {
       await job.deleteOne(); // Use deleteOne method
     }
-    console.log('Expired job deletion completed.');
+    // console.log('Expired job deletion completed.');
   } catch (error) {
     console.error('Error running expired job deletion:', error);
   }

@@ -1,20 +1,24 @@
 const mongoose = require('mongoose');
 
-const jobReport = new mongoose.Schema({
-    job_id:{
+const jobReportSchema = new mongoose.Schema({
+    job_id: {
         type: String,
-        required:true
+        required: true,
+        unique: true
     },
-    problem:{
-        type:String,
-        required:true
-    },
-    discription:{
-        type:String,
-       
+    reports: [{
+        problem: {
+            type: String,
+            required: true
+        },
+        description: String
+    }],
+    reportCount: {
+        type: Number,
+        default: 0
     }
-})
+});
 
-const reportSchema = mongoose.model('reportJob',jobReport)
+const Report = mongoose.model('Report', jobReportSchema);
 
-module.exports=reportSchema
+module.exports = Report;

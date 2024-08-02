@@ -5,7 +5,7 @@ const Report = require('../models/Report');
 router.post('/report_job', async (req, res) => {
     const { job_id, report } = req.body;
     const { problem, description } = report;
-
+console.log(job_id,'job_id');
     try {
         let existingReport = await Report.findOne({ job_id });
         if (existingReport) {
@@ -22,6 +22,7 @@ router.post('/report_job', async (req, res) => {
                 reports: [{ problem, description }],
                 reportCount: 1
             });
+            console.log(newReport,'newReport');
             await newReport.save();
             return res.status(201).send({ message: 'New report created', report: newReport });
         }

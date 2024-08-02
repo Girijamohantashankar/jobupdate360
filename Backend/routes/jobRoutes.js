@@ -3,6 +3,7 @@ const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
 const Job = require('../models/Job');
 const cron = require('node-cron');
+const Report = require('../models/Report');
 
 // create jobs
 router.post('/createJob', authMiddleware, async (req, res) => {
@@ -126,6 +127,18 @@ router.put('/updateEdit/:id', authMiddleware, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+
+// report jobs
+router.get('/reportAllJobs', async (req, res) => {
+  try {
+    const jobs = await Report.find().sort({ createdAt: -1 });
+    res.json(jobs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 
 

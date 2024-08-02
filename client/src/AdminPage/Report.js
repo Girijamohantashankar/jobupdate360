@@ -8,47 +8,65 @@ const Report = () => {
     const [error, setError] = useState(null);
     const [jobToDelete, setJobToDelete] = useState(null);
 
+    // Fetch jobs from the API
     const fetchJobs = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/job/allJobs');
-            setJobs(response.data);
+            const response = await axios.get('http://localhost:5000/api/job/reportAllJobs');
+            console.log(response.data);  // Log the full response to inspect the structure
+
+            // Extract the first report from each entry
+            const singleJobReports = response.data.flatMap(item => item.reports ? [item.reports[0]] : []);
+            setJobs(singleJobReports);
             setLoading(false);
         } catch (error) {
-            setError(error);
+            console.error('Error fetching jobs:', error);
+            setJobs([]);  // Set jobs to an empty array in case of an error
+            setError('Error fetching jobs');
             setLoading(false);
         }
     };
 
+    // Fetch jobs when the component mounts
     useEffect(() => {
         fetchJobs();
     }, []);
 
+    // Handle job deletion
     const handleDelete = async (jobId) => {
         try {
             await axios.delete(`http://localhost:5000/api/reportDelete/delete_job/${jobId}`);
-            await fetchJobs(); 
+            await fetchJobs(); // Refresh the job list after deletion
         } catch (error) {
             console.error('Error deleting job:', error);
+            setError('Error deleting job');
         }
     };
 
+    // Confirm deletion
     const handleConfirmDelete = () => {
-        handleDelete(jobToDelete);
-        setJobToDelete(null);
+        if (jobToDelete) {
+            handleDelete(jobToDelete);
+            setJobToDelete(null);
+        }
     };
 
+    // Render loading, error, or jobs
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error loading jobs</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="report-container">
-            {jobs.map((job) => (
-                <div key={job._id} className="job-card">
-                    <h3>{job.title}</h3>
-                    <p>{job.description}</p>
-                    <button onClick={() => setJobToDelete(job._id)}>Delete</button>
-                </div>
-            ))}
+            {Array.isArray(jobs) && jobs.length > 0 ? (
+                jobs.map((job) => (
+                    <div key={job._id} className="job-card">
+                        <h3>{job.problem}</h3>
+                        <p>{job.description}</p>
+                        <button onClick={() => setJobToDelete(job._id)}>Delete</button>
+                    </div>
+                ))
+            ) : (
+                <div>No jobs available</div>
+            )}
             {jobToDelete && (
                 <div className="modal">
                     <div className="modal-content">

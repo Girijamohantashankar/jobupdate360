@@ -1,35 +1,39 @@
 import React, { useState } from 'react';
 import './ReportModal.css';
+import Loader from '../Components/Loader';
 import axios from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ReportModal = ({ isOpen, onClose, job_id }) => {
     const [selectedOption, setSelectedOption] = useState('');
     const [description, setDescription] = useState('');
-    const [report, setReport] = useState({
-        problem: '',
-        description: ''
-    });
+    const [loading, setLoading] = useState(false);
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
-        setReport(prev => ({ ...prev, problem: event.target.value }));
     };
 
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
-        setReport(prev => ({ ...prev, description: event.target.value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await axios.post('http://localhost:5000/api/report/report_job', {
-                report,
-             job_id
+                job_id,
+                report: {
+                    problem: selectedOption,
+                    description
+                }
             });
-            console.log('Report submitted with:', { report, job: job_id });
+            setLoading(false);
+            toast.success('Report submitted successfully');
             onClose();
         } catch (error) {
+            setLoading(false);
+            toast.error('Error submitting report');
             console.error('Error submitting report:', error);
         }
     };
@@ -99,8 +103,11 @@ const ReportModal = ({ isOpen, onClose, job_id }) => {
                     maxLength={150}
                 />
                 <div className="char-count">{description.length}/150</div>
-                <button onClick={handleSubmit}>Report to Jobupdate360</button>
+                <button onClick={handleSubmit} disabled={loading}>
+                    {loading ? <Loader /> : 'Report to Jobupdate360'}
+                </button>
                 <button onClick={onClose} className="close-button">Close</button>
+                <ToastContainer />
             </div>
         </div>
     );

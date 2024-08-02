@@ -297,7 +297,7 @@ function Home() {
             </div>
             <div className="report_jobs">
               <div className="report_icon" onClick={handleOpenModal}>
-                <span><i class="fa-solid fa-flag"></i></span>
+                <span><i className="fa-solid fa-flag"></i></span>
                 <span>Report job</span>
               </div>
             </div>

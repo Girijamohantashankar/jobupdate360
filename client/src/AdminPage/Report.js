@@ -8,41 +8,32 @@ const Report = () => {
     const [error, setError] = useState(null);
     const [jobToDelete, setJobToDelete] = useState(null);
 
-    // Fetch jobs from the API
+
     const fetchJobs = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/job/reportAllJobs');
-            console.log(response.data);  // Log the full response to inspect the structure
-
-            // Extract the first report from each entry
             const singleJobReports = response.data.flatMap(item => item.reports ? [item.reports[0]] : []);
             setJobs(singleJobReports);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching jobs:', error);
-            setJobs([]);  // Set jobs to an empty array in case of an error
+            setJobs([]);  
             setError('Error fetching jobs');
             setLoading(false);
         }
     };
-
-    // Fetch jobs when the component mounts
     useEffect(() => {
         fetchJobs();
     }, []);
-
-    // Handle job deletion
     const handleDelete = async (jobId) => {
         try {
             await axios.delete(`http://localhost:5000/api/reportDelete/delete_job/${jobId}`);
-            await fetchJobs(); // Refresh the job list after deletion
+            await fetchJobs(); 
         } catch (error) {
             console.error('Error deleting job:', error);
             setError('Error deleting job');
         }
     };
-
-    // Confirm deletion
     const handleConfirmDelete = () => {
         if (jobToDelete) {
             handleDelete(jobToDelete);
@@ -50,7 +41,6 @@ const Report = () => {
         }
     };
 
-    // Render loading, error, or jobs
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 

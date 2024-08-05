@@ -3,11 +3,10 @@ const router = express.Router();
 const Report = require('../models/Report');
 const Job = require('../models/Job'); 
 
-
+// To Display the reports Job
 router.post('/report_job', async (req, res) => {
     const { job_id, report } = req.body;
     const { problem, description } = report;
-// console.log(job_id,'job_id');
     try {
         let existingReport = await Report.findOne({ job_id });
         if (existingReport) {
@@ -24,7 +23,6 @@ router.post('/report_job', async (req, res) => {
                 reports: [{ problem, description }],
                 reportCount: 1
             });
-            // console.log(newReport,'newReport');
             await newReport.save();
             return res.status(201).send({ message: 'New report created', report: newReport });
         }
@@ -34,30 +32,23 @@ router.post('/report_job', async (req, res) => {
     }
 });
 
+// To delete the job Reports
 router.post('/report_delete', async (req, res) => {
-    try {
-        const { jobId } = req.body; // Extract jobId from request body
-        console.log(`Received request to delete job with ID: ${jobId}`);
+    try {        
+        const { jobId } = req.body;
+        const jobDeletionResult = await Job.findByIdAndDelete(jobId);
+        const reportDeletionResult = await Report.deleteMany({ job_id: jobId });
 
-        // Deleting the job
-        // const jobDeletionResult = await Job.findByIdAndDelete(jobId);
-        // console.log(`Job deletion ff result:`, jobDeletionResult);
-
-        // Deleting associated reports
-        const reportDeletionResult = await Report.findByIdAndDelete({ job_id: jobId });
-        console.log(`Report deletion result:`, reportDeletionResult);
-
-        // if (jobDeletionResult && reportDeletionResult.deletedCount > 0) {
-        //     res.status(200).json({ message: 'Job and its reports deleted successfully' });
-        // } else {
-        //     res.status(404).json({ message: 'Job not found or no associated reports' });
-        // }
+        res.status(200).json({
+            message: 'Job and reports deleted successfully',
+            jobDeletionResult,
+            reportDeletionResult
+        });
     } catch (error) {
         console.error('Error deleting job and reports:', error);
         res.status(500).json({ message: 'Error deleting job and reports', error });
     }
 });
-
 
 
 

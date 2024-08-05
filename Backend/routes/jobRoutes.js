@@ -40,7 +40,7 @@ async function deleteExpiredJobs() {
     console.error('Error running expired job deletion:', error);
   }
 }
-cron.schedule('0 0 * * *', deleteExpiredJobs);
+cron.schedule('0 18 * * *', deleteExpiredJobs);
 
 
 //  get all jobs

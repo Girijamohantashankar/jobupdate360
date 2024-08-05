@@ -37,6 +37,8 @@ function App() {
         <Route path="/customform" element={<CustomForm />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/reportJob" element={<Report />} />
+        {/* <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} /> */}
+        {/* <Route path="/reportJob" element={isLoggedIn ? <Report /> : <Navigate to="/login" /> } /> */}
       </Routes>
     </div>
   );

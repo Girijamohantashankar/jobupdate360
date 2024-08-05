@@ -36,27 +36,29 @@ router.post('/report_job', async (req, res) => {
 
 router.post('/report_delete', async (req, res) => {
     try {
-        const { jobId } = req.body; // Extract jobId from request body
-        console.log(`Received request to delete job with ID: ${jobId}`);
+        const { jobId, reportId } = req.body; // Extract jobId and reportId from request body
+        console.log(`Received request to delete report with ID: ${reportId} from job with ID: ${jobId}`);
 
-        // Deleting the job
-        // const jobDeletionResult = await Job.findByIdAndDelete(jobId);
-        // console.log(`Job deletion ff result:`, jobDeletionResult);
+        // Find the report document
+        const reportDoc = await Report.findOne({ job_id: jobId });
 
-        // Deleting associated reports
-        const reportDeletionResult = await Report.findByIdAndDelete({ job_id: jobId });
-        console.log(`Report deletion result:`, reportDeletionResult);
+        if (!reportDoc) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
 
-        // if (jobDeletionResult && reportDeletionResult.deletedCount > 0) {
-        //     res.status(200).json({ message: 'Job and its reports deleted successfully' });
-        // } else {
-        //     res.status(404).json({ message: 'Job not found or no associated reports' });
-        // }
+        // Filter out the specific report by its _id
+        reportDoc.reports = reportDoc.reports.filter(report => report._id.toString() !== reportId);
+
+        // Save the updated report document
+        await reportDoc.save();
+
+        res.status(200).json({ message: 'Report deleted successfully' });
     } catch (error) {
-        console.error('Error deleting job and reports:', error);
-        res.status(500).json({ message: 'Error deleting job and reports', error });
+        console.error('Error deleting report:', error);
+        res.status(500).json({ message: 'Error deleting report', error });
     }
 });
+
 
 
 

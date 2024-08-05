@@ -12,15 +12,14 @@ const Report = () => {
     const fetchJobs = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/job/reportAllJobs');
-            console.log('Fetched jobs:', response.data);  // Log fetched jobs
+            console.log('Fetched jobs:', response.data); // Log fetched jobs
 
-            // Extract the first report from each entry
-            const singleJobReports = response.data.flatMap(item => item.reports ? [item.reports[0]] : []);
-            setJobs(singleJobReports);
+            // Update jobs state
+            setJobs(response.data);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching jobs:', error);
-            setJobs([]);  // Set jobs to an empty array in case of an error
+            setJobs([]); // Set jobs to an empty array in case of an error
             setError('Error fetching jobs');
             setLoading(false);
         }
@@ -35,7 +34,8 @@ const Report = () => {
     const handleDelete = async (jobId) => {
         console.log('Deleting job with ID:', jobId); // Log jobId
         try {
-            const response = await axios.post('http://localhost:5000/api/report/report_delete', { jobId });
+            // Call the endpoint to delete the entire job
+            const response = await axios.delete(`http://localhost:5000/api/reportDelete/delete_job/${jobId}`);
             console.log('Delete response:', response); // Log the response
             await fetchJobs(); // Refresh the job list after deletion
         } catch (error) {
@@ -46,6 +46,7 @@ const Report = () => {
 
     // Confirm deletion
     const handleConfirmDelete = () => {
+        console.log('Confirm delete clicked'); // Debugging
         if (jobToDelete) {
             handleDelete(jobToDelete);
             setJobToDelete(null);
@@ -63,7 +64,7 @@ const Report = () => {
                     <div key={job._id} className="job-card">
                         <h3>{job.problem}</h3>
                         <p>{job.description}</p>
-                        <button onClick={() => setJobToDelete(jobs._id)}>Delete</button>
+                        <button onClick={() => setJobToDelete(job._id)}>Delete</button>
                     </div>
                 ))
             ) : (

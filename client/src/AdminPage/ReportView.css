@@ -1,0 +1,15 @@
+/* Add your CSS styles for the ReportView component here */
+.job_details {
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd;
+}
+
+.job_description_details {
+    margin-top: 20px;
+}
+
+.job_description {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

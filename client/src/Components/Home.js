@@ -20,8 +20,12 @@ function Home() {
   const [selectedPay, setSelectedPay] = useState("");
   const [selectedEducation, setSelectedEducation] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const navigate = useNavigate();
+
+
+
+
+  
   useEffect(() => {
     const fetchJobs = async () => {
       try {

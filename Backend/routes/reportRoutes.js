@@ -3,11 +3,10 @@ const router = express.Router();
 const Report = require('../models/Report');
 const Job = require('../models/Job'); 
 
-
+// To Display the reports Job
 router.post('/report_job', async (req, res) => {
     const { job_id, report } = req.body;
     const { problem, description } = report;
-// console.log(job_id,'job_id');
     try {
         let existingReport = await Report.findOne({ job_id });
         if (existingReport) {
@@ -24,7 +23,6 @@ router.post('/report_job', async (req, res) => {
                 reports: [{ problem, description }],
                 reportCount: 1
             });
-            // console.log(newReport,'newReport');
             await newReport.save();
             return res.status(201).send({ message: 'New report created', report: newReport });
         }
@@ -34,7 +32,9 @@ router.post('/report_job', async (req, res) => {
     }
 });
 
+// To delete the job Reports
 router.post('/report_delete', async (req, res) => {
+<<<<<<< HEAD
     try {
         const { jobId, reportId } = req.body; // Extract jobId and reportId from request body
         console.log(`Received request to delete report with ID: ${reportId} from job with ID: ${jobId}`);
@@ -53,11 +53,41 @@ router.post('/report_delete', async (req, res) => {
         await reportDoc.save();
 
         res.status(200).json({ message: 'Report deleted successfully' });
+=======
+    try {        
+        const { jobId } = req.body;
+        const jobDeletionResult = await Job.findByIdAndDelete(jobId);
+        const reportDeletionResult = await Report.deleteMany({ job_id: jobId });
+
+        res.status(200).json({
+            message: 'Job and reports deleted successfully',
+            jobDeletionResult,
+            reportDeletionResult
+        });
+>>>>>>> 1aff87935359d0a936fc8ffe086c98535dab12fc
     } catch (error) {
         console.error('Error deleting report:', error);
         res.status(500).json({ message: 'Error deleting report', error });
     }
 });
+
+
+
+  
+router.get('/viewReportjob/:id', async (req, res) => {
+    try { 
+        const job = await Report.findById(req.params.id);
+        if (!job) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+        console.log("Fetched Job:", job);  
+        res.json(job);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
 
 
 

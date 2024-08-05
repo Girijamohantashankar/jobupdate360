@@ -14,6 +14,7 @@ import ViewJobs from './Components/ViewJobs';
 import JobsEdit from './Components/JobsEdit';
 import Admin from './AdminPage/Admin';
 import Report from "./AdminPage/Report";
+import ReportView from './AdminPage/ReportView';
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,8 @@ function App() {
         <Route path="/customform" element={<CustomForm />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/reportJob" element={<Report />} />
+        <Route path="/job/:id" element={<ReportView />} />
+        
         {/* <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} /> */}
         {/* <Route path="/reportJob" element={isLoggedIn ? <Report /> : <Navigate to="/login" /> } /> */}
       </Routes>

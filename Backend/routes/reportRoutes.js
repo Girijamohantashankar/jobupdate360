@@ -52,4 +52,23 @@ router.post('/report_delete', async (req, res) => {
 
 
 
+  
+router.get('/viewReportjob/:id', async (req, res) => {
+    try { 
+        const job = await Report.findById(req.params.id);
+        if (!job) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+        console.log("Fetched Job:", job);  
+        res.json(job);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
+
+
+
 module.exports = router;

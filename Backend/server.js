@@ -22,4 +22,5 @@ app.use('/api/auth', require('./routes/adminRoutes'));
 app.use('/api/report', require('./routes/reportRoutes'));
 
 
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

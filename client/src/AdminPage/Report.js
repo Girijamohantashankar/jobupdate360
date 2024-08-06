@@ -68,9 +68,13 @@ const Report = () => {
             {Array.isArray(jobs) && jobs.length > 0 ? (
                 jobs.map((job) => (
                     <div key={job._id} className="job-card">
-                        <h3>{job.reports[0]?.problem}</h3>
-                        <p>{job.reports[0]?.description}</p>
-                        <p><b>Total user Reported:</b> {job.reportCount}</p>
+                        <div className='report_counts'>
+                            <span><b>Reason:</b></span>
+                            <span> {job.reports[0]?.problem}</span>
+                            <span><b>Description</b></span>
+                            <p>{job.reports[0]?.description}</p>
+                            <p><b>Total user Reported:</b> <span className='text_color_r'>{job.reportCount}</span> </p>
+                        </div>
                         <div className='card_delete_btn'>
                             <button className='btn_delete' onClick={() => setJobToDelete(job)}>Delete</button>
                             <button className='btn_view' onClick={() => navigate(`/job/${job._id}`)}>View</button>

@@ -81,3 +81,13 @@
 .card_delete_btn button{
     margin-right: 30px;
 }
+.text_color_r{
+    color: red;
+    font-size: bold;
+}.report_counts{
+    display: flex;
+    flex-direction: column;
+gap: 5px;
+}.report_counts p{
+    margin-bottom: 0;
+}

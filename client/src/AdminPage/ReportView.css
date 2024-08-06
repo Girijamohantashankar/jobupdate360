@@ -1,8 +1,9 @@
 /* Add your CSS styles for the ReportView component here */
-.job_details {
+.job_details_new {
     padding: 20px;
     margin: 20px;
     border: 1px solid #ddd;
+    margin: 100px auto;
 }
 
 .job_description_details {
@@ -12,4 +13,14 @@
 .job_description {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.report_details {
+    max-height: 350px;
+    overflow: auto;
+}
+
+.job_details.new_reports_job {
+    width: 60%;
+    margin: 100px auto;
 }

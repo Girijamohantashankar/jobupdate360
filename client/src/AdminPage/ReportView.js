@@ -37,7 +37,7 @@ function ReportView() {
     };
 
     return (
-        <div className="job_details">
+        <div className="job_details new_reports_job">
 
             <button className="back_button" onClick={handleBackClick}>Back</button>
 

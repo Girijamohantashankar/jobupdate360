@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Report = require('../models/Report');
-const Job = require('../models/Job'); 
+const Job = require('../models/Job');
 
 // To Display the reports Job
 router.post('/report_job', async (req, res) => {
@@ -34,7 +34,7 @@ router.post('/report_job', async (req, res) => {
 
 // To delete the job Reports
 router.post('/report_delete', async (req, res) => {
-    try {        
+    try {
         const { jobId } = req.body;
         const jobDeletionResult = await Job.findByIdAndDelete(jobId);
         const reportDeletionResult = await Report.deleteMany({ job_id: jobId });
@@ -50,24 +50,39 @@ router.post('/report_delete', async (req, res) => {
     }
 });
 
-
-
-  
+//  To view the report Job Id  
 router.get('/viewReportjob/:id', async (req, res) => {
-    try { 
-        const job = await Report.findById(req.params.id);
+    try {
+        const report = await Report.findById(req.params.id);
+        if (!report) {
+            return res.status(404).json({ message: 'Report not found' });
+        }
+
+        const job = await Job.findById(report.job_id);
         if (!job) {
             return res.status(404).json({ message: 'Job not found' });
         }
-        console.log("Fetched Job:", job);  
-        res.json(job);
+
+        const reportDetails = {
+            report,
+            job
+        };
+
+        res.json(reportDetails);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
-
-
+// To Ignore the report Job
+router.delete('/deleteReport/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        res.status(200).json({ message: 'Report job deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
 
 
 

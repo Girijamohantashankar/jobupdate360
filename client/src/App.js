@@ -39,7 +39,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/reportJob" element={<Report />} />
         <Route path="/job/:id" element={<ReportView />} />
-        
+
         {/* <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} /> */}
         {/* <Route path="/reportJob" element={isLoggedIn ? <Report /> : <Navigate to="/login" /> } /> */}
       </Routes>

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Report.css';
 import { useNavigate } from "react-router-dom";
+import Loader from '../Components/Loader';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Report = () => {
     const [jobs, setJobs] = useState([]);
@@ -10,28 +13,17 @@ const Report = () => {
     const [jobToDelete, setJobToDelete] = useState(null);
     const navigate = useNavigate();
 
-
     const fetchJobs = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/job/reportAllJobs');
-<<<<<<< HEAD
-            console.log('Fetched jobs:', response.data); // Log fetched jobs
-
-            // Update jobs state
-=======
-            console.log('Fetched jobs:', response.data);
->>>>>>> 1aff87935359d0a936fc8ffe086c98535dab12fc
             setJobs(response.data);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching jobs:', error);
-<<<<<<< HEAD
-            setJobs([]); // Set jobs to an empty array in case of an error
-=======
             setJobs([]);
->>>>>>> 1aff87935359d0a936fc8ffe086c98535dab12fc
             setError('Error fetching jobs');
             setLoading(false);
+            toast.error('Error fetching jobs');
         }
     };
 
@@ -42,59 +34,63 @@ const Report = () => {
     // Handle job deletion
     const handleDelete = async (job) => {
         try {
-<<<<<<< HEAD
-            // Call the endpoint to delete the entire job
-            const response = await axios.delete(`http://localhost:5000/api/reportDelete/delete_job/${jobId}`);
-            console.log('Delete response:', response); // Log the response
-            await fetchJobs(); // Refresh the job list after deletion
-=======
             const response = await axios.post('http://localhost:5000/api/report/report_delete', { jobId: job.job_id });
             console.log('Delete response:', response);
+            toast.success('Job deleted successfully');
             await fetchJobs();
->>>>>>> 1aff87935359d0a936fc8ffe086c98535dab12fc
         } catch (error) {
             console.error('Error deleting job:', error);
             setError('Error deleting job');
+            toast.error('Error deleting job');
+        }
+    };
+
+    // Handle ignoring the report job
+    const handleIgnore = async (job) => {
+        try {
+            await axios.delete(`http://localhost:5000/api/report/deleteReport/${job._id}`);
+            toast.success('Report ignored successfully');
+            await fetchJobs();
+        } catch (error) {
+            console.error('Error ignoring report job:', error);
+            setError('Error ignoring report job');
+            toast.error('Error ignoring report job');
         }
     };
 
     // Confirm deletion
     const handleConfirmDelete = () => {
-        console.log('Confirm delete clicked'); // Debugging
         if (jobToDelete) {
             handleDelete(jobToDelete);
             setJobToDelete(null);
         }
     };
 
-    // Render loading, error, or jobs
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div><Loader /></div>;
     if (error) return <div>{error}</div>;
 
     return (
-
         <div className="report-container">
+            <ToastContainer />
             {Array.isArray(jobs) && jobs.length > 0 ? (
                 jobs.map((job) => (
                     <div key={job._id} className="job-card">
-<<<<<<< HEAD
-                        <h3>{job.problem}</h3>
-                        <p>{job.description}</p>
-                        <button onClick={() => setJobToDelete(job._id)}>Delete</button>
-=======
-                        <h3>{job.reports[0]?.problem}</h3>
-                        <p>{job.reports[0]?.description}</p>
-                        <p>Total user Reported: {job.reportCount}</p>
-                        <div className='card_delete_btn'>
-                            <button className='btn_delete' onClick={() => setJobToDelete(job)}>Delete</button>
-                            <button className='btn_view' onClick={() => navigate(`/job/${job._id}`)}>View</button>
-                            <button className='btn_ignore' onClick={() => navigate(`${job.job_id}`)}>Ignore</button>
+                        <div className='report_counts'>
+                            <span><b>Reason:</b></span>
+                            <span> {job.reports[0]?.problem}</span>
+                            <span><b>Description</b></span>
+                            <p>{job.reports[0]?.description}</p>
+                            <p><b>Total user Reported:</b> <span className='text_color_r'>{job.reportCount}</span> </p>
                         </div>
->>>>>>> 1aff87935359d0a936fc8ffe086c98535dab12fc
+                        <div className='card_delete_btn'>
+                            <button className='btn_delete' onClick={() => setJobToDelete(job)}>Delete Job</button>
+                            <button className='btn_view' onClick={() => navigate(`/job/${job._id}`)}>View</button>
+                            <button className='btn_ignore' onClick={() => handleIgnore(job)}>Ignore</button>
+                        </div>
                     </div>
                 ))
             ) : (
-                <div>No jobs available</div>
+                <div className='no_job_text'>No jobs available</div>
             )}
             {jobToDelete && (
                 <div className="modal">

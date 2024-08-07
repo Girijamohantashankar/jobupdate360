@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Report = require('../models/Report');
-const Job = require('../models/Job'); 
+const Job = require('../models/Job');
 
 // To Display the reports Job
 router.post('/report_job', async (req, res) => {
@@ -34,27 +34,7 @@ router.post('/report_job', async (req, res) => {
 
 // To delete the job Reports
 router.post('/report_delete', async (req, res) => {
-<<<<<<< HEAD
     try {
-        const { jobId, reportId } = req.body; // Extract jobId and reportId from request body
-        console.log(`Received request to delete report with ID: ${reportId} from job with ID: ${jobId}`);
-
-        // Find the report document
-        const reportDoc = await Report.findOne({ job_id: jobId });
-
-        if (!reportDoc) {
-            return res.status(404).json({ message: 'Job not found' });
-        }
-
-        // Filter out the specific report by its _id
-        reportDoc.reports = reportDoc.reports.filter(report => report._id.toString() !== reportId);
-
-        // Save the updated report document
-        await reportDoc.save();
-
-        res.status(200).json({ message: 'Report deleted successfully' });
-=======
-    try {        
         const { jobId } = req.body;
         const jobDeletionResult = await Job.findByIdAndDelete(jobId);
         const reportDeletionResult = await Report.deleteMany({ job_id: jobId });
@@ -64,32 +44,52 @@ router.post('/report_delete', async (req, res) => {
             jobDeletionResult,
             reportDeletionResult
         });
->>>>>>> 1aff87935359d0a936fc8ffe086c98535dab12fc
     } catch (error) {
-        console.error('Error deleting report:', error);
-        res.status(500).json({ message: 'Error deleting report', error });
+        console.error('Error deleting job and reports:', error);
+        res.status(500).json({ message: 'Error deleting job and reports', error });
     }
 });
 
-
-
-  
+//  To view the report Job Id  
 router.get('/viewReportjob/:id', async (req, res) => {
-    try { 
-        const job = await Report.findById(req.params.id);
+    try {
+        const report = await Report.findById(req.params.id);
+        if (!report) {
+            return res.status(404).json({ message: 'Report not found' });
+        }
+
+        const job = await Job.findById(report.job_id);
         if (!job) {
             return res.status(404).json({ message: 'Job not found' });
         }
-        console.log("Fetched Job:", job);  
-        res.json(job);
+
+        const reportDetails = {
+            report,
+            job
+        };
+
+        res.json(reportDetails);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
+// To Ignore the report Job
+router.delete('/deleteReport/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const report = await Report.findByIdAndDelete(id);
 
+        if (!report) {
+            return res.status(404).json({ message: 'Report not found' });
+        }
 
-
+        res.status(200).json({ message: 'Report job deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting report:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
 
 
 

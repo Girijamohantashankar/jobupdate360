@@ -91,3 +91,6 @@ gap: 5px;
 }.report_counts p{
     margin-bottom: 0;
 }
+.no_job_text{
+    margin: 100px auto;
+}

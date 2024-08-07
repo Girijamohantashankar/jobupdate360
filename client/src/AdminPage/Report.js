@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Report.css';
 import { useNavigate } from "react-router-dom";
 import Loader from '../Components/Loader';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Report = () => {
     const [jobs, setJobs] = useState([]);
@@ -14,7 +16,6 @@ const Report = () => {
     const fetchJobs = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/job/reportAllJobs');
-            console.log('Fetched jobs:', response.data);
             setJobs(response.data);
             setLoading(false);
         } catch (error) {
@@ -22,6 +23,7 @@ const Report = () => {
             setJobs([]);
             setError('Error fetching jobs');
             setLoading(false);
+            toast.error('Error fetching jobs');
         }
     };
 
@@ -34,24 +36,28 @@ const Report = () => {
         try {
             const response = await axios.post('http://localhost:5000/api/report/report_delete', { jobId: job.job_id });
             console.log('Delete response:', response);
+            toast.success('Job deleted successfully');
             await fetchJobs();
         } catch (error) {
             console.error('Error deleting job:', error);
             setError('Error deleting job');
+            toast.error('Error deleting job');
         }
     };
 
     // Handle ignoring the report job
     const handleIgnore = async (job) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/api/report/deleteReport/${job._id}`);
-            console.log('Ignore response:', response);
-            setJobs(jobs.filter(j => j._id !== job._id));
+            await axios.delete(`http://localhost:5000/api/report/deleteReport/${job._id}`);
+            toast.success('Report ignored successfully');
+            await fetchJobs();
         } catch (error) {
             console.error('Error ignoring report job:', error);
             setError('Error ignoring report job');
+            toast.error('Error ignoring report job');
         }
     };
+
     // Confirm deletion
     const handleConfirmDelete = () => {
         if (jobToDelete) {
@@ -65,6 +71,7 @@ const Report = () => {
 
     return (
         <div className="report-container">
+            <ToastContainer />
             {Array.isArray(jobs) && jobs.length > 0 ? (
                 jobs.map((job) => (
                     <div key={job._id} className="job-card">
@@ -76,14 +83,14 @@ const Report = () => {
                             <p><b>Total user Reported:</b> <span className='text_color_r'>{job.reportCount}</span> </p>
                         </div>
                         <div className='card_delete_btn'>
-                            <button className='btn_delete' onClick={() => setJobToDelete(job)}>Delete</button>
+                            <button className='btn_delete' onClick={() => setJobToDelete(job)}>Delete Job</button>
                             <button className='btn_view' onClick={() => navigate(`/job/${job._id}`)}>View</button>
                             <button className='btn_ignore' onClick={() => handleIgnore(job)}>Ignore</button>
                         </div>
                     </div>
                 ))
             ) : (
-                <div>No jobs available</div>
+                <div className='no_job_text'>No jobs available</div>
             )}
             {jobToDelete && (
                 <div className="modal">

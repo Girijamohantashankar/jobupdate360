@@ -31,6 +31,8 @@ const ReportModal = ({ isOpen, onClose, job_id }) => {
             setLoading(false);
             toast.success('Report submitted successfully');
             onClose();
+            setSelectedOption('');
+            setDescription('');
         } catch (error) {
             setLoading(false);
             toast.error('Error submitting report');

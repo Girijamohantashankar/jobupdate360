@@ -71,7 +71,7 @@ function Navbar() {
             <img src={logo} alt="logo" className="logo_img" />
           </Link>
           <Link className="Link br_btn" to="/">Home</Link>
-          <Link className="Link br_btn" to="/review">People Review</Link>
+          <Link className="Link br_btn" to="/feedbackShow">People's Feedback</Link>
           {isLoggedIn && (
             <Link className="Link br_btn" to="/dashboard">Dashboard</Link>
           )}

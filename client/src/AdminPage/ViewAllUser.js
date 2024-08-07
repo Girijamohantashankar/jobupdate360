@@ -104,7 +104,7 @@ function ViewAllUser() {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.status}</td>
-                <td>
+                <td className='btn_group'>
                   <button
                     className='active'
                     onClick={() => handleAction(user, 'active')}

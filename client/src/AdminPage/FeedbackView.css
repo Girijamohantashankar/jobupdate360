@@ -1,0 +1,44 @@
+.feedback-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.feedback-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: left;
+}
+
+.feedback-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.feedback-actions button {
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.feedback-actions button.reject_btn {
+    background-color: red;
+}
+
+.feedback-actions button.reject_btn:hover {
+    background-color: rgb(184, 5, 5);
+}
+
+.feedback-actions button:hover {
+    background: #0056b3;
+}

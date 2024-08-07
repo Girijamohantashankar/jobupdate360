@@ -4,6 +4,7 @@ import { getRelativeTime } from "./relativeTime";
 import "./Home.css";
 import { Link, useNavigate } from "react-router-dom";
 import ReportModal from './ReportModal';
+import FeedbackModal from "./FeedbackModal";
 
 
 
@@ -309,6 +310,7 @@ function Home() {
           </div>
         )}
       </div>
+      <FeedbackModal />
     </div>
   );
 }

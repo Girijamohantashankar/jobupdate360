@@ -15,12 +15,16 @@ import JobsEdit from './Components/JobsEdit';
 import Admin from './AdminPage/Admin';
 import Report from "./AdminPage/Report";
 import ReportView from './AdminPage/ReportView';
+import ViewAllUser from './AdminPage/ViewAllUser';
+import FeedbackModal from './Components/FeedbackModal';
+import FeedbackView from './AdminPage/FeedbackView';
+import PeoplesReview from './Components/PeoplesReview';
 
 function App() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
 
-  const showNavbar = !['/login', '/signup', '/admin', "/reportJob", "/job"].includes(location.pathname);
+  const showNavbar = !['/login', '/signup', '/admin', "/reportJob","/viewAllUsers","/feedbackView"].includes(location.pathname) && !/^\/job\/[^/]+$/.test(location.pathname);
 
   return (
     <div>
@@ -36,9 +40,13 @@ function App() {
         <Route path="/viewJobs/EditJob/:id" element={isLoggedIn ? <JobsEdit /> : <Navigate to="/login" />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/customform" element={<CustomForm />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/reportJob" element={<Report />} />
-        <Route path="/job/:id" element={<ReportView />} />
+        <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
+        <Route path="/reportJob" element={isLoggedIn ? <Report /> : <Navigate to="/login" />} />
+        <Route path="/job/:id" element={isLoggedIn ? <ReportView /> : <Navigate to="/login" />} />
+        <Route path="/viewAllUsers" element={isLoggedIn ? <ViewAllUser /> : <Navigate to="/login" />} />
+        <Route path="/feedback" element={<FeedbackModal /> } />
+        <Route path="/feedbackView" element={<FeedbackView /> } />
+        <Route path="/feedbackShow" element={<PeoplesReview /> } />
       </Routes>
     </div>
   );

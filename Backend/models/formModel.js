@@ -1,6 +1,26 @@
 const mongoose = require('mongoose');
 
 const formSchema = new mongoose.Schema({
+    fullName: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    mobileNumber: {
+        type: String,
+        required: true,
+    },
+    location: {
+        type: String,
+        required: true,
+    },
+    portfolioUrl: {
+        type: String,
+        required: false,
+    },
     pdf: {
         type: String,
         required: true,

@@ -21,7 +21,7 @@ app.use('/api/form', require('./routes/formRoutes'));
 app.use('/api/auth', require('./routes/adminRoutes'));
 app.use('/api/report', require('./routes/reportRoutes'));
 app.use('/api/user_controls', require('./routes/userControlsRouters'));
-app.use('/api/', require('./routes/feedbackRoutes'));
+app.use('/api/feedbackUser', require('./routes/feedbackRoutes'));
 app.use('/api/countUser', require('./routes/totalUserRoutes'));
 
 

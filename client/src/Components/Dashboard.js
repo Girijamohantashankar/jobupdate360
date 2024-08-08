@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 import job from "../assets/job.png";
 import people from "../assets/people.png";
 import jobview from "../assets/jobview.png";
+import Loader from './Loader';
+
 
 function Dashboard() {
   const [greeting, setGreeting] = useState('');
   const [userName, setUserName] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -34,6 +37,8 @@ function Dashboard() {
       } catch (error) {
         console.error('Error fetching user data:', error.message);
 
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -51,6 +56,10 @@ function Dashboard() {
     setGreeting(`${greet}, ${userName}`);
   }, [userName]);
 
+  if (isLoading) {
+    return <Loader />; 
+  }
+
   return (
     <>
       <div className="dashboard_container">
@@ -59,8 +68,8 @@ function Dashboard() {
         </div>
       </div >
       <div className='dashboard_cards'>
-        <Link className='dashboard_card'>
-          <img src={people} className='people_img' alt='png'/>
+        <Link to='/appliedPeople' className='dashboard_card'>
+          <img src={people} className='people_img' alt='png' />
           <p className='dashboard_card_title'>People Applied</p>
         </Link>
         <Link to='/createJob' className='dashboard_card'>
@@ -68,7 +77,7 @@ function Dashboard() {
           <p className='dashboard_card_title'>Create Jobs</p>
         </Link>
         <Link to='/viewJobs' className='dashboard_card'>
-          <img src={jobview} className='job_img' alt='png'/>
+          <img src={jobview} className='job_img' alt='png' />
           <p className='dashboard_card_title'>View Posts</p>
         </Link>
       </div>

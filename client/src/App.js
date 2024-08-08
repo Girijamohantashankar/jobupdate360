@@ -19,12 +19,13 @@ import ViewAllUser from './AdminPage/ViewAllUser';
 import FeedbackModal from './Components/FeedbackModal';
 import FeedbackView from './AdminPage/FeedbackView';
 import PeoplesReview from './Components/PeoplesReview';
+import ApplyPeople from './Components/ApplyPeople';
 
 function App() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
 
-  const showNavbar = !['/login', '/signup', '/admin', "/reportJob","/viewAllUsers","/feedbackView"].includes(location.pathname) && !/^\/job\/[^/]+$/.test(location.pathname);
+  const showNavbar = !['/login', '/signup', '/admin', "/reportJob", "/viewAllUsers", "/feedbackView"].includes(location.pathname) && !/^\/job\/[^/]+$/.test(location.pathname);
 
   return (
     <div>
@@ -40,14 +41,14 @@ function App() {
         <Route path="/viewJobs/EditJob/:id" element={isLoggedIn ? <JobsEdit /> : <Navigate to="/login" />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/customform" element={<CustomForm />} />
-        {/* <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} /> */}
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
         <Route path="/reportJob" element={isLoggedIn ? <Report /> : <Navigate to="/login" />} />
         <Route path="/job/:id" element={isLoggedIn ? <ReportView /> : <Navigate to="/login" />} />
         <Route path="/viewAllUsers" element={isLoggedIn ? <ViewAllUser /> : <Navigate to="/login" />} />
-        <Route path="/feedback" element={<FeedbackModal /> } />
-        <Route path="/feedbackView" element={<FeedbackView /> } />
-        <Route path="/feedbackShow" element={<PeoplesReview /> } />
+        <Route path="/feedback" element={<FeedbackModal />} />
+        <Route path="/feedbackView" element={isLoggedIn ? <FeedbackView /> : <Navigate to="/login" />} />
+        <Route path="/feedbackShow" element={<PeoplesReview />} />
+        <Route path="/appliedPeople" element={isLoggedIn ? <ApplyPeople /> : <Navigate to="/login" />} />
       </Routes>
     </div>
   );

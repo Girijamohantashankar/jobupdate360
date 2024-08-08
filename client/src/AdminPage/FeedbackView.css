@@ -42,3 +42,12 @@
 .feedback-actions button:hover {
     background: #0056b3;
 }
+.no-feedbacks{
+
+    height: 100vh;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

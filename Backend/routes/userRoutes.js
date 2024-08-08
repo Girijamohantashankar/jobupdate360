@@ -8,7 +8,6 @@ const router = express.Router();
 
 router.get('/username', authMiddleware, async (req, res) => {
     try {
-        // console.log('Request received for /username');
         const userId = req.user.id;
         const user = await User.findById(userId).select('name');
         if (!user) {
@@ -20,5 +19,10 @@ router.get('/username', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+
+
+
+
 
 module.exports = router;

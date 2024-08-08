@@ -3,7 +3,7 @@ import './FeedbackView.css';
 import ConfirmationModal from './ConfirmationModalFeedback';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import noDataGif from '../assets/nodata.gif'; 
 
 function FeedbackView() {
     const [feedbacks, setFeedbacks] = useState([]);
@@ -11,6 +11,7 @@ function FeedbackView() {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [confirmAction, setConfirmAction] = useState(null);
     const [confirmMessage, setConfirmMessage] = useState('');
+
     useEffect(() => {
         const fetchFeedbacks = async () => {
             try {
@@ -92,17 +93,24 @@ function FeedbackView() {
                 onConfirm={handleConfirm}
                 message={confirmMessage}
             />
-            {feedbacks.map(feedback => (
-                <div key={feedback._id} className="feedback-card">
-                    <p><strong>Feedback:</strong> {feedback.feedback}</p>
-                    <p><strong>Rating:</strong> {feedback.rating}</p>
-                    <p><strong>Timestamp:</strong> {new Date(feedback.timestamp).toLocaleString()}</p>
-                    <div className="feedback-actions">
-                        <button onClick={() => handleAccept(feedback._id)}>Accept</button>
-                        <button className='reject_btn' onClick={() => handleReject(feedback._id)}>Reject</button>
+            {feedbacks.length > 0 ? (
+                feedbacks.map(feedback => (
+                    <div key={feedback._id} className="feedback-card">
+                        <p><strong>Feedback:</strong> {feedback.feedback}</p>
+                        <p><strong>Rating:</strong> {feedback.rating}</p>
+                        <p><strong>Timestamp:</strong> {new Date(feedback.timestamp).toLocaleString()}</p>
+                        <div className="feedback-actions">
+                            <button onClick={() => handleAccept(feedback._id)}>Accept</button>
+                            <button className='reject_btn' onClick={() => handleReject(feedback._id)}>Reject</button>
+                        </div>
                     </div>
+                ))
+            ) : (
+                <div className="no-feedbacks">
+                    <p>No feedbacks found</p>
+                    <img src={noDataGif} alt="No data found" />
                 </div>
-            ))}
+            )}
         </div>
     );
 }

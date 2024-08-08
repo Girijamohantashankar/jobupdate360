@@ -40,7 +40,8 @@ function App() {
         <Route path="/viewJobs/EditJob/:id" element={isLoggedIn ? <JobsEdit /> : <Navigate to="/login" />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/customform" element={<CustomForm />} />
-        <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
+        {/* <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} /> */}
+        <Route path="/admin" element={<Admin />} />
         <Route path="/reportJob" element={isLoggedIn ? <Report /> : <Navigate to="/login" />} />
         <Route path="/job/:id" element={isLoggedIn ? <ReportView /> : <Navigate to="/login" />} />
         <Route path="/viewAllUsers" element={isLoggedIn ? <ViewAllUser /> : <Navigate to="/login" />} />

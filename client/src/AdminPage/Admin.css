@@ -1,0 +1,72 @@
+.admin_container {
+    padding: 20px;
+}
+
+.admin_container .dashboard_cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.admin_container .dashboard_card,
+.dashboard_card_circle {
+    background-color: #0d4eab;
+}
+
+.admin_container .dashboard_card,
+.dashboard_card_circle {
+    height: 213px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+.admin_container .dashboard_card img.job_img {
+    width: 50%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.admin_container .dashboard_card .dashboard_card_title {
+    color: #fff;
+}
+
+.admin_container .dashboard_card .dashboard_card_title,
+.dashboard_card_circle .dashboard_card_title1 {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dashboard_card_circle .dashboard_card_title1 {
+    color: #fff;
+    margin-top: 184px;
+    font-size: 15px;
+}
+
+.admin_container .circular_progress {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(var(--color) var(--progress), #ddd 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin_container .circular_progress::before {
+    content: '';
+    position: absolute;
+    width: 114px;
+    height: 114px;
+    border-radius: 50%;
+    background-color: #0d4eab;
+}

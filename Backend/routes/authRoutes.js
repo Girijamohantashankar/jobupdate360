@@ -3,49 +3,40 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const CryptoJS = require('crypto-js');
 
 
 // Login route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
   try {
     if (!email || !password) {
       return res.status(400).json({ message: 'Please fill in all fields' });
     }
-
-    // Find the user by email
     let user = await User.findOne({ email });
     if (!user) {
-      console.error('User not found');
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
-    // Check if the user is blocked
     if (user.status === 'blocked') {
-      // console.error('User is blocked');
       return res.status(403).json({ message: 'Your account is blocked' });
     }
-
-    // Compare the provided password with the stored hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      // console.error('Password does not match');
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-
-    // Create a JWT token if authentication is successful
     const payload = {
       user: {
         id: user.id,
       },
     };
+
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' }, (err, token) => {
       if (err) {
-        console.error('JWT signing error:', err);
         throw err;
       }
-      res.json({ token, message: 'Login successful' });
+      const secretKey = process.env.ENCRYPTION_SECRET_KEY; 
+      const encryptedToken = CryptoJS.AES.encrypt(token, secretKey).toString();
+      res.json({ token: encryptedToken, message: 'Login successful' });
     });
   } catch (error) {
     console.error('Server error:', error);

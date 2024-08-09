@@ -6,6 +6,8 @@ const upload = require('../middleware/multerConfig');
 
 router.post('/submit-form', upload.single('pdf'), async (req, res) => {
     try {
+        console.log(req.body);
+
 
         const existingForm = await Form.findOne({ email: req.body.email });
 
@@ -25,6 +27,8 @@ router.post('/submit-form', upload.single('pdf'), async (req, res) => {
             totalExperience: req.body.totalExperience,
             interviewDate: req.body.interviewDate,
             noticePeriod: req.body.noticePeriod,
+            jobId: req.body.jobId,
+            createdBy: req.body.createdBy,
         });
 
         await form.save();

@@ -7,6 +7,8 @@ import Loader from './Loader';
 
 function CustomForm() {
 
+  const job_id = localStorage.getItem('System_config')
+  const created_id = localStorage.getItem('Current_Ip_address')
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -21,6 +23,8 @@ function CustomForm() {
     totalExperience: '',
     interviewDate: '',
     noticePeriod: '',
+    job_id: job_id,
+    createdBy: created_id
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +57,8 @@ function CustomForm() {
     formDataToSend.append('totalExperience', formData.totalExperience);
     formDataToSend.append('interviewDate', formData.interviewDate);
     formDataToSend.append('noticePeriod', formData.noticePeriod);
+    formDataToSend.append('jobId', formData.job_id);
+    formDataToSend.append('createdBy', formData.createdBy);
 
     try {
       const response = await fetch('http://localhost:5000/api/form/submit-form', {
@@ -60,9 +66,12 @@ function CustomForm() {
         body: formDataToSend,
       });
 
-      if (response.ok) {
+      if (response.status === 201) {
         setIsSubmitted(true);
         toast.success('Application submitted successfully!');
+        localStorage.setItem('System_config', '')
+        localStorage.setItem('Current_Ip_address', '')
+
       } else if (response.status === 400) {
         const data = await response.json();
         toast.error(data.message);

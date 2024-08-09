@@ -123,6 +123,8 @@ function Home() {
     if (url) {
       window.open(url, "_blank");
     } else {
+      localStorage.setItem('System_config', selectedJob._id)
+      localStorage.setItem('Current_Ip_address', selectedJob.createdBy)
       navigate("/customform");
     }
   };

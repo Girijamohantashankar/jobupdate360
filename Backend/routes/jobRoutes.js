@@ -12,7 +12,7 @@ router.post('/createJob', authMiddleware, async (req, res) => {
       ...req.body,
       createdBy: req.user.id
     };
-  
+
 
     const job = new Job(jobData);
     const saveJob = await job.save();
@@ -98,7 +98,7 @@ router.get('/EditJob/:id', authMiddleware, async (req, res) => {
     res.json({ job });
 
   } catch (error) {
-    console.error('Error in GET /EditJob/:id route:', error); 
+    console.error('Error in GET /EditJob/:id route:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

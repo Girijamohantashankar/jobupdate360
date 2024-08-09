@@ -20,6 +20,7 @@ import FeedbackModal from './Components/FeedbackModal';
 import FeedbackView from './AdminPage/FeedbackView';
 import PeoplesReview from './Components/PeoplesReview';
 import ApplyPeople from './Components/ApplyPeople';
+import Applicants from './Components/Applicants';
 
 function App() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function App() {
         <Route path="/feedbackView" element={isLoggedIn ? <FeedbackView /> : <Navigate to="/login" />} />
         <Route path="/feedbackShow" element={<PeoplesReview />} />
         <Route path="/appliedPeople" element={isLoggedIn ? <ApplyPeople /> : <Navigate to="/login" />} />
+        <Route path="/view-applied-candidates/:jobId" element={ isLoggedIn ? <Applicants /> : <Navigate to="/login" />} />
       </Routes>
     </div>
   );

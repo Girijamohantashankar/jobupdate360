@@ -1,0 +1,127 @@
+.applicants_container {
+    padding: 0 20px;
+}
+
+.no-applicants-msg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.no-applicants-msg img {
+    width: 290px;
+    margin: auto;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 60px;
+    margin: auto;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+.table_responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.applicants_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.applicants_table th,
+.applicants_table td {
+    padding: 12px;
+    border-top: none;
+    border-left: none;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    text-align: left;
+
+}
+
+.applicants_table th,
+.applicants_table td:first-child {
+    border-left: 1px solid #000;
+}
+
+.applicants_table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.applicants_table td a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.applicants_table td a:hover {
+    text-decoration: underline;
+}
+
+.table_tr {
+    border-top: 1px solid #000;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+.filter_container {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.search_input {
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    height: 25px;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.filter_select {
+    padding: 8px;
+    width: 100%;
+    max-width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 43px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: 1px solid #007bff;
+    outline: none;
+    cursor: pointer;
+}
+
+.filter_dropdown {
+    margin-top: 20px;
+
+}
+
+.download_pdf button {
+    margin-right: 20px;
+    height: 41px;
+}
+.export_button.btn_download{
+    background-color: green;
+}

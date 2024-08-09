@@ -17,7 +17,26 @@
   padding: 15px;
   transition: transform 0.2s;
   position: relative;
+  max-height: 300px;
 }
+
+.job-item.card {
+  overflow: auto;
+}
+
+.job-item.card::-webkit-scrollbar {
+  display: none;
+}
+
+.job-item.card {
+  scrollbar-width: none;
+}
+
+.job-item.card {
+  -ms-overflow-style: none;
+}
+
+
 
 .job-item.card:hover {
   transform: translateY(-5px);
@@ -75,13 +94,13 @@
   font-style: italic;
 }
 
-.job-item.card{
+.job-item.card {
   width: auto;
 }
-.viewJob_container h1{
+
+.viewJob_container h1 {
   text-align: center;
   text-decoration: underline;
-}
-.viewJob_container h1{
   padding-top: 50px;
+  color: #0056b3;
 }

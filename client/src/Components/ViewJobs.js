@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from './Modal';
 import './ViewJobs.css';
 import { Link } from 'react-router-dom';
+import Loader from './Loader';
 
 function ViewJobs() {
   const [jobs, setJobs] = useState([]);
@@ -76,7 +77,7 @@ function ViewJobs() {
   };
 
   if (loading) {
-    return <div className="loading-spinner">Loading...</div>;
+    return <div className="loading-spinner"><Loader /></div>;
   }
 
   if (error) {

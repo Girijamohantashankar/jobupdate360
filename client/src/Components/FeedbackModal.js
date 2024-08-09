@@ -50,12 +50,14 @@ const FeedbackModal = () => {
                         <div className="modal-content">
                             <h2>We Value Your Feedback</h2>
                             <p>Please provide your feedback to help us improve.</p>
+                            <div className='f_input_content'>
                             <input
                                 type='email'
                                 placeholder='Your Email'
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                className='f_email_n'
                             />
                             <input
                                 type='tel'
@@ -63,7 +65,9 @@ const FeedbackModal = () => {
                                 value={phoneNumber}
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 required
+                                className='f_phone_n'
                             />
+                            </div>
 
                             <textarea
                                 placeholder="Your feedback..."

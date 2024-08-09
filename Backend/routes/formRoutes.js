@@ -38,4 +38,21 @@ router.post('/submit-form', upload.single('pdf'), async (req, res) => {
     }
 });
 
+
+
+router.get('/applicants/:jobId', async (req, res) => {
+    try {
+        const { jobId } = req.params;
+        const applicants = await Form.find({ jobId });
+
+        if (!applicants) {
+            return res.status(404).json({ message: 'No applicants found for this job' });
+        }
+
+        res.status(200).json({ applicants });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching applicants', error });
+    }
+});
+
 module.exports = router;

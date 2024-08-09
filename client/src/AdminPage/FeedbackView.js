@@ -96,6 +96,8 @@ function FeedbackView() {
             {feedbacks.length > 0 ? (
                 feedbacks.map(feedback => (
                     <div key={feedback._id} className="feedback-card">
+                        <p><strong>Email Id:</strong> {feedback.email}</p>
+                        <p><strong>PhoneNumber:</strong> {feedback.phoneNumber}</p>
                         <p><strong>Feedback:</strong> {feedback.feedback}</p>
                         <p><strong>Rating:</strong> {feedback.rating}</p>
                         <p><strong>Timestamp:</strong> {new Date(feedback.timestamp).toLocaleString()}</p>

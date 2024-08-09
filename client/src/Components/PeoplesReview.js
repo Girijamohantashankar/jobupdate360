@@ -25,14 +25,16 @@ function PeoplesReview() {
 
         fetchFeedbacks();
     }, []);
-
-    // Utility function to format ID
-    const formatId = (id) => {
-        if (!id) return 'N/A';
-        if (id.length <= 4) return id;
-        return `XXXX${id.slice(-4)}`;
+    const formatEmail = (email) => {
+        if (!email) return 'N/A';
+        const [localPart] = email.split('@');
+        const capitalizedLocalPart = localPart.charAt(0).toUpperCase() + localPart.slice(1);
+        if (capitalizedLocalPart.length <= 6) return capitalizedLocalPart;
+        return `${capitalizedLocalPart.substring(0, 5)}...`;
     };
-
+    
+   
+    
     return (
         <div className="peoples-review-container">
             {loading ? (
@@ -43,10 +45,10 @@ function PeoplesReview() {
                     {feedbacks.length > 0 ? (
                         feedbacks.map(feedback => (
                             <div key={feedback._id} className="feedback-card">
-                                <span><strong>ID:</strong> {formatId(feedback._id)}</span>
-                                <span><strong>Message:</strong> {feedback.feedback} </span>
+                                <span className='f_w'><span className='user_icon'><i className="fa-regular fa-user"></i></span>{formatEmail(feedback.email)}</span>
+                                <span><strong> <i className="fa-solid fa-quote-left"></i></strong> {feedback.feedback} <strong><i className="fa-solid fa-quote-right"></i></strong></span>
                                 <span><strong>Rating:</strong> <StarRating rating={feedback.rating} /></span>
-                                <span><strong>Timestamp:</strong> {new Date(feedback.timestamp).toLocaleString()}</span>
+                                <span><strong>Posted:</strong> {new Date(feedback.timestamp).toLocaleString()}</span>
                             </div>
                         ))
                     ) : (

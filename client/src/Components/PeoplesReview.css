@@ -7,7 +7,7 @@
 }
 
 .peoples-review-container .feedback-card {
-    border: 1px solid #ddd;
+    border-top: 5px solid #0041ff;
     border-radius: 5px;
     padding: 15px;
     background-color: #f9f9f9;
@@ -15,7 +15,25 @@
     flex-direction: column;
     gap: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    position: relative;
+    overflow: hidden; 
 }
+
+.peoples-review-container .feedback-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 0;
+    background-color: #0041ff;
+    transition: width 0.3s ease;
+}
+
+.peoples-review-container .feedback-card:hover::before {
+    width: 100%; 
+}
+
 
 .peoples-review-container .feedback-card:hover {
     transform: translateY(-5px);
@@ -36,4 +54,14 @@
 .feedback-card p {
     display: flex;
     flex-direction: column;
+}
+.user_icon{
+    background-color: #ddd;
+    border-radius: 50%;
+    padding: 6px 9px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-right: 12px;
+    border: 1px solid #0041ff;
+}.f_w{
+    font-weight: bold;
 }

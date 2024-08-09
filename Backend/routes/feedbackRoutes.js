@@ -4,12 +4,19 @@ const router = express.Router();
 
 
 // TO Save the feedback 
-router.post('/feedback', (req, res) => {
-    const { feedback, rating } = req.body;
-    const newFeedback = new Feedback({ feedback, rating });
-    newFeedback.save()
-        .then(() => res.sendStatus(200))
-        .catch(err => res.status(400).send(err));
+router.post('/feedback', async (req, res) => {
+    const { feedback, rating, email, phoneNumber } = req.body;
+    if (!feedback || !rating || !email || !phoneNumber) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+    try {
+        const newFeedback = new Feedback({ feedback, rating, email, phoneNumber });
+        await newFeedback.save();
+        res.status(200).json({ message: 'Feedback submitted successfully' });
+    } catch (err) {
+        console.error('Error saving feedback:', err);
+        res.status(500).json({ message: 'Failed to submit feedback', error: err });
+    }
 });
 
 // To Retrieve status-->"view" feedback

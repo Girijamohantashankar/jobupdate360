@@ -8,6 +8,8 @@ const FeedbackModal = () => {
     const [showModal, setShowModal] = useState(false);
     const [feedback, setFeedback] = useState('');
     const [rating, setRating] = useState(0);
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     useEffect(() => {
         if (!localStorage.getItem('lastVisit')) {
@@ -26,7 +28,7 @@ const FeedbackModal = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ feedback, rating }),
+            body: JSON.stringify({ feedback, rating, email, phoneNumber }),
         });
 
         if (response.ok) {
@@ -48,12 +50,27 @@ const FeedbackModal = () => {
                         <div className="modal-content">
                             <h2>We Value Your Feedback</h2>
                             <p>Please provide your feedback to help us improve.</p>
+                            <input
+                                type='email'
+                                placeholder='Your Email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                            <input
+                                type='tel'
+                                placeholder='Your Phone Number'
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                required
+                            />
+
                             <textarea
                                 placeholder="Your feedback..."
                                 value={feedback}
                                 onChange={(e) => setFeedback(e.target.value)}
                                 required
-                                style={{ resize: 'none' }} // Disable horizontal resizing
+                                style={{ resize: 'none' }}
                             />
                             <div className="star-rating">
                                 {[...Array(5)].map((star, index) => (
@@ -65,7 +82,7 @@ const FeedbackModal = () => {
                                 ))}
                             </div>
                             <button onClick={handleFeedbackSubmit}>Submit</button>
-                            <div className='close_icon_modal'> 
+                            <div className='close_icon_modal'>
                                 <i
                                     className="fas fa-times close-icon"
                                     onClick={() => setShowModal(false)}

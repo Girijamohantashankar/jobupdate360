@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Job'); 
+const authMiddleware = require('../middleware/authMiddleware');
 
-router.get('/monthly-post-views', async (req, res) => {
+router.get('/monthly-post-views', authMiddleware, async (req, res) => {
   try {
+    const userId = req.user.id;
     const now = new Date();
     const startOfYear = new Date(now.getFullYear(), 0, 1);
     const endOfYear = new Date(now.getFullYear() + 1, 0, 1);

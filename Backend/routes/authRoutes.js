@@ -4,6 +4,14 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const CryptoJS = require('crypto-js');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+
+
+
+
+
 
 
 // Login route
@@ -34,7 +42,7 @@ router.post('/login', async (req, res) => {
       if (err) {
         throw err;
       }
-      const secretKey = process.env.ENCRYPTION_SECRET_KEY; 
+      const secretKey = process.env.ENCRYPTION_SECRET_KEY;
       const encryptedToken = CryptoJS.AES.encrypt(token, secretKey).toString();
       res.json({ token: encryptedToken, message: 'Login successful' });
     });
@@ -75,5 +83,6 @@ router.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 module.exports = router;

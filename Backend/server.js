@@ -29,6 +29,7 @@ app.use('/api/feedbackUser', require('./routes/feedbackRoutes'));
 app.use('/api/countUser', require('./routes/totalUserRoutes'));
 app.use('/api/DownloadAllResume', require('./routes/Zip_resumeRoutes'));
 app.use('/api/monthlyView', require('./routes/monthly_PostRoutes'));
+app.use('/api/forgot', require('./routes/forgotRoutes'));
 
 
 

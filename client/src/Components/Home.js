@@ -8,6 +8,7 @@ import FeedbackModal from "./FeedbackModal";
 import Loader from './Loader';
 
 
+
 function Home() {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -320,6 +321,7 @@ function Home() {
               </div>
             )}
           </div>
+      
           <FeedbackModal />
         </>
       )}

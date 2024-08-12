@@ -1,0 +1,33 @@
+.no_found_container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.notfound-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.notfound-gif {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.no_found_container h1 {
+    font-size: 2rem;
+    color: #f2523a;
+}
+
+.no_found_container p {
+    font-size: 1rem;
+    color: #666;
+}

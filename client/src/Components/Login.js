@@ -128,8 +128,13 @@ function Login() {
           <label htmlFor="remember">Remember me</label>
         </div>
         {loading && <Loader />}
-        <button type="submit" className="auth-button">Login</button>
+        <div className='login_text'>
+          <button type="submit" className="auth-button">Login</button>
+          <p><Link to="/forgot_password">Forgot Password?</Link></p>
+        </div>
         <p>Don't have an account? <Link to="/signup">Signup</Link></p>
+
+
       </form>
       <ToastContainer />
     </div>

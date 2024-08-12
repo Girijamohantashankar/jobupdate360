@@ -22,6 +22,7 @@ import PeoplesReview from './Components/PeoplesReview';
 import ApplyPeople from './Components/ApplyPeople';
 import Applicants from './Components/Applicants';
 
+
 function App() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
@@ -51,6 +52,7 @@ function App() {
         <Route path="/feedbackShow" element={<PeoplesReview />} />
         <Route path="/appliedPeople" element={isLoggedIn ? <ApplyPeople /> : <Navigate to="/login" />} />
         <Route path="/view-applied-candidates/:jobId" element={ isLoggedIn ? <Applicants /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={ isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
     </div>
   );

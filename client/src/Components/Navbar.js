@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/logo.png';
 import { AuthContext } from '../AuthContext';
+import LogoutModal from './LogoutModal';
 
 function Navbar() {
   const { isLoggedIn, setIsLoggedIn, userName, setUserName } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -39,9 +41,18 @@ function Navbar() {
   }, [setIsLoggedIn, setUserName]);
 
   const handleLogout = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
+    setIsModalOpen(false);
     navigate('/');
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleProfileIconClick = (e) => {
@@ -86,8 +97,10 @@ function Navbar() {
                 </span>
                 {showDropdown && (
                   <div className="dropdown_menu" ref={dropdownRef}>
-                    <Link to="/profile" className="dropdown_item">Profile</Link>
-                    <div className="dropdown_item" onClick={handleLogout}>Logout</div>
+                    <Link to="/profile" className="dropdown_item"><i className="fa-solid fa-user"></i> Profile</Link>
+                    <Link to="/" className="dropdown_item"><i className="fa-solid fa-house"></i> Home</Link>
+                    <Link to="/dashboard" className="dropdown_item"><i className="fa-solid fa-chart-line"></i> Dashboard</Link>
+                    <div className="dropdown_item" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Logout</div>
                   </div>
                 )}
               </li>
@@ -99,6 +112,11 @@ function Navbar() {
           </ul>
         </div>
       </div>
+      <LogoutModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmLogout}
+      />
     </div>
   );
 }

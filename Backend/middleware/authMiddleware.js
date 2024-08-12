@@ -3,7 +3,7 @@ const CryptoJS = require('crypto-js');
 
 module.exports = (req, res, next) => {
   const encryptedToken = req.header('Authorization')?.replace('Bearer ', '');
-  
+
   if (!encryptedToken) {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }

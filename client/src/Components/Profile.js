@@ -68,23 +68,29 @@ function Profile() {
   };
   return (
     <div className="profile-container">
-      <div className="profile-header">
-        <img src={defaultProfilePic} alt="Profile" className="profile-pic" />
-        <div className='user_detail'>
-          <h2>{userDetails.name}</h2>
-          <p>{userDetails.email}</p>
-        </div>
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="profile-header">
+            <img src={defaultProfilePic} alt="Profile" className="profile-pic" />
+            <div className='user_detail'>
+              <h2>{userDetails.name}</h2>
+              <p>{userDetails.email}</p>
+            </div>
+          </div>
 
-      <div className="profile-actions">
-        <button onClick={handleHome} className="home-button"><i className="fa-solid fa-house"></i> Home</button>
-        <button onClick={handleLogout} className="logout-button"><i className="fa-solid fa-right-from-bracket"></i> Logout</button>
-      </div>
-      <LogoutModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmLogout}
-      />
+          <div className="profile-actions">
+            <button onClick={handleHome} className="home-button"><i className="fa-solid fa-house"></i> Home</button>
+            <button onClick={handleLogout} className="logout-button"><i className="fa-solid fa-right-from-bracket"></i> Logout</button>
+          </div>
+          <LogoutModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onConfirm={handleConfirmLogout}
+          />
+        </>
+      )}
     </div>
   );
 }

@@ -50,7 +50,7 @@
     border-bottom: 1px solid #000;
     border-right: 1px solid #000;
     text-align: left;
-
+    text-wrap: nowrap;
 }
 
 .applicants_table th,
@@ -59,8 +59,9 @@
 }
 
 .applicants_table th {
-    background-color: #f2f2f2;
+    background-color: #1e27f1;
     font-weight: bold;
+    color: #fff;
 }
 
 .applicants_table td a {
@@ -122,6 +123,25 @@
     margin-right: 20px;
     height: 41px;
 }
-.export_button.btn_download{
+
+.export_button.btn_download {
     background-color: green;
+}
+
+.export_button.btn_download_all {
+    background-color: orange;
+}
+
+button.export_button i {
+    font-size: 20px;
+}
+
+.search_input_box {
+    position: relative;
+}
+
+.search_input_box i {
+    position: absolute;
+    margin-left: -30px;
+    margin-top: 14px;
 }

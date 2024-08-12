@@ -5,7 +5,7 @@ import job from "../assets/job.png";
 import people from "../assets/people.png";
 import jobview from "../assets/jobview.png";
 import Loader from './Loader';
-
+import MonthlyPostViews from './MonthlyPostViews';
 
 function Dashboard() {
   const [greeting, setGreeting] = useState('');
@@ -57,7 +57,7 @@ function Dashboard() {
   }, [userName]);
 
   if (isLoading) {
-    return <Loader />; 
+    return <Loader />;
   }
 
   return (
@@ -81,6 +81,7 @@ function Dashboard() {
           <p className='dashboard_card_title'>View Posts</p>
         </Link>
       </div>
+      <MonthlyPostViews />
     </>
 
   );

@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,6 +12,9 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+// Serve static files from the "uploads" directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Routes
@@ -23,6 +27,10 @@ app.use('/api/report', require('./routes/reportRoutes'));
 app.use('/api/user_controls', require('./routes/userControlsRouters'));
 app.use('/api/feedbackUser', require('./routes/feedbackRoutes'));
 app.use('/api/countUser', require('./routes/totalUserRoutes'));
+app.use('/api/DownloadAllResume', require('./routes/Zip_resumeRoutes'));
+app.use('/api/monthlyView', require('./routes/monthly_PostRoutes'));
+
+
 
 
 

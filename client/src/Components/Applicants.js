@@ -49,15 +49,16 @@ function Applicants() {
 
     useEffect(() => {
         filterApplicants();
-    }, [searchTerm, filters]);
+    }, [searchTerm, filters, applicants]);
 
     const filterApplicants = () => {
-        let updatedApplicants = applicants;
+        let updatedApplicants = [...applicants];
 
         if (searchTerm) {
-            updatedApplicants = updatedApplicants.filter((applicant) =>
-                applicant.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                applicant.email.toLowerCase().includes(searchTerm.toLowerCase())
+            updatedApplicants = updatedApplicants.filter(
+                (applicant) =>
+                    applicant.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    applicant.email.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
@@ -81,6 +82,10 @@ function Applicants() {
 
         setFilteredApplicants(updatedApplicants);
     };
+
+
+
+
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -114,6 +119,35 @@ function Applicants() {
         });
     };
 
+    const downloadAllResumes = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/DownloadAllResume/download-resumes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ applicants: filteredApplicants }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to download resumes');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'resumes.zip';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        } catch (err) {
+            console.error('Error downloading resumes:', err);
+        }
+    };
+
+
+
     return (
         <div className="applicants_container">
             <h1>Applied Candidates</h1>
@@ -126,6 +160,7 @@ function Applicants() {
                         onChange={handleSearchChange}
                         className="search_input"
                     />
+                    <i className="fa-solid fa-magnifying-glass"></i>
                 </div>
                 <div className='filter_dropdown'>
                     <select
@@ -167,8 +202,9 @@ function Applicants() {
                     </select>
                 </div>
                 <div className='download_pdf'>
-                    <button onClick={exportToPDF} className="export_button">Preview PDF</button>
-                    <button onClick={downloadPDF} className="export_button btn_download">Download PDF</button>
+                    <button onClick={exportToPDF} className="export_button">Preview PDF <i className="fa-solid fa-file-pdf"></i></button>
+                    <button onClick={downloadPDF} className="export_button btn_download">Download PDF <i className="fa-solid fa-download"></i></button>
+                    <button onClick={downloadAllResumes} className="export_button btn_download_all">Download All Resumes <i className="fa-solid fa-cloud-arrow-down"></i></button>
                 </div>
             </div>
             {loading ? (
@@ -227,10 +263,11 @@ function Applicants() {
                                     <td>{new Date(applicant.interviewDate).toLocaleDateString()}</td>
                                     <td>{applicant.noticePeriod} days</td>
                                     <td>
-                                        <a href={`/${applicant.pdf}`} target="_blank" rel="noopener noreferrer">
+                                        <a href={`http://localhost:5000/${applicant.pdf}`} target="_blank" rel="noopener noreferrer">
                                             View PDF
                                         </a>
                                     </td>
+
                                 </tr>
                             ))}
                         </tbody>

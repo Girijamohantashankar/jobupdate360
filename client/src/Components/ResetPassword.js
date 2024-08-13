@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './ForgotPassword.css'; 
+import './ForgotPassword.css';
 
 function ResetPassword() {
     const { token } = useParams();
@@ -22,9 +22,17 @@ function ResetPassword() {
         setLoading(true);
 
         try {
-            const response = await axios.post(`http://localhost:5000/api/forgot/reset-password`, { token, password });
+            const response = await axios.post(
+                `http://localhost:5000/api/forgot/reset-password`,
+                { password },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
             toast.success(response.data.message);
-            setTimeout(() => navigate('/login'), 3000); 
+            setTimeout(() => navigate('/login'), 3000);
         } catch (err) {
             console.error("Error:", err.response ? err.response.data : err);
             toast.error(err.response ? err.response.data.message : 'Error resetting password');
@@ -54,9 +62,9 @@ function ResetPassword() {
                     required
                     className="forgot-password-input"
                 />
-                <button 
-                    type="submit" 
-                    className="forgot-password-button" 
+                <button
+                    type="submit"
+                    className="forgot-password-button"
                     disabled={loading}
                 >
                     {loading ? 'Resetting...' : 'Reset Password'}

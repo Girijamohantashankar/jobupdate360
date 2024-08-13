@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const CryptoJS = require('crypto-js');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-
+const sendWelcomeEmail = require('../utils/mailer');
 
 
 
@@ -66,6 +66,11 @@ router.post('/signup', async (req, res) => {
     }
     user = new User({ name, email, password });
     await user.save();
+
+
+    // Send the welcome email
+    await sendWelcomeEmail(email, name);
+
     const payload = {
       user: {
         id: user.id,

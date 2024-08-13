@@ -46,7 +46,8 @@ router.post('/forgot-password', async (req, res) => {
         htmlTemplate = htmlTemplate.replace('{{resetLink}}', resetLink);
 
         await transporter.sendMail({
-            from: process.env.EMAIL_USER,
+            // from: process.env.EMAIL_USER,
+            from: `"jobupdate360" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: 'Password Reset Request',
             html: htmlTemplate,

@@ -6,36 +6,41 @@ import 'react-toastify/dist/ReactToastify.css';
 import './ForgotPassword.css';
 
 function ResetPassword() {
-    const { token } = useParams();
+    const { resetToken } = useParams(); 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+
         if (password !== confirmPassword) {
-            toast.error("Passwords do not match");
+            toast.error('Passwords do not match');
+            setLoading(false);
             return;
         }
 
-        setLoading(true);
-
         try {
-            const response = await axios.post(
-                `http://localhost:5000/api/forgot/reset-password`,
-                { password },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                }
-            );
-            toast.success(response.data.message);
-            setTimeout(() => navigate('/login'), 3000);
-        } catch (err) {
-            console.error("Error:", err.response ? err.response.data : err);
-            toast.error(err.response ? err.response.data.message : 'Error resetting password');
+            const response = await axios.post(`http://localhost:5000/api/forgot/reset-password/${resetToken}`, {
+                newPassword: password,
+                confirmPassword: confirmPassword,
+            });
+
+            if (response.status === 200) {
+                toast.success('Password has been reset successfully');
+                setTimeout(() => {
+                    navigate('/login'); // Redirect to login page after successful reset
+                }, 2000);
+            }
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Something went wrong, please try again later');
+            }
         } finally {
             setLoading(false);
         }

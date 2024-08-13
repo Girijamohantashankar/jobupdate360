@@ -16,11 +16,20 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  resetToken: {
+    type: String,
+    default: null,
+  },
+  resetTokenExpiry: {
+    type: Date,
+    default: null,
+  },
   status: {
     type: String,
     enum: ['active', 'blocked'],
     default: 'active',
   },
+
 });
 
 // Hash the password before saving the user

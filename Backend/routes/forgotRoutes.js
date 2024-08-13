@@ -22,7 +22,6 @@ const transporter = nodemailer.createTransport({
 // Forgot Password route
 router.post('/forgot-password', async (req, res) => {
     const { email } = req.body;
-
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
         return res.status(400).json({ message: 'Invalid email address' });
     }
@@ -38,10 +37,9 @@ router.post('/forgot-password', async (req, res) => {
         user.resetToken = encryptedResetToken;
         user.resetTokenExpiry = resetTokenExpiry;
         await user.save();
-
         const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
-        
-        const filePath = path.join(__dirname, '../views/password-reset-email.html'); 
+
+        const filePath = path.join(__dirname, '../views/password-reset-email.html');
         let htmlTemplate = fs.readFileSync(filePath, 'utf8');
         htmlTemplate = htmlTemplate.replace('{{resetLink}}', resetLink);
 
@@ -61,33 +59,74 @@ router.post('/forgot-password', async (req, res) => {
 });
 
 // Reset Password route
-router.post('/reset-password', async (req, res) => {
-    const { token, password } = req.body;
+router.post('/reset-password/:resetToken', async (req, res) => {
+    const { resetToken } = req.params;
+    const { newPassword, confirmPassword } = req.body;
+
+    if (!newPassword || !confirmPassword) {
+        return res.status(400).json({ message: 'Please provide both new password and confirm password' });
+    }
+
+    if (newPassword !== confirmPassword) {
+        return res.status(400).json({ message: 'Passwords do not match' });
+    }
+
     try {
-        const bytes = CryptoJS.AES.decrypt(token, process.env.ENCRYPTION_SECRET_KEY);
-        const decryptedToken = bytes.toString(CryptoJS.enc.Utf8);
-        if (!decryptedToken) {
-            return res.status(400).json({ message: 'Invalid or expired reset token' });
+        // Find the user with the corresponding reset token
+        const users = await User.find({});
+        let user = null;
+
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].resetToken) { // Check if resetToken is not null or undefined
+                const decryptedToken = CryptoJS.AES.decrypt(users[i].resetToken, process.env.ENCRYPTION_SECRET_KEY).toString(CryptoJS.enc.Utf8);
+                if (decryptedToken === resetToken) {
+                    user = users[i];
+                    break;
+                }
+            }
         }
-        const user = await User.findOne({
-            resetToken: CryptoJS.AES.encrypt(decryptedToken, process.env.ENCRYPTION_SECRET_KEY).toString(),
-            resetTokenExpiry: { $gt: Date.now() }
-        });
 
         if (!user) {
             return res.status(400).json({ message: 'Invalid or expired reset token' });
         }
+
+        // Check if the reset token has expired
+        if (user.resetTokenExpiry < Date.now()) {
+            return res.status(400).json({ message: 'Reset token has expired' });
+        }
+
+        // Hash the new password
         const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
-        user.resetToken = undefined; 
-        user.resetTokenExpiry = undefined; 
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update the user's password and remove the reset token and expiry
+        user.password = hashedPassword;  // Save the hashed password
+        user.resetToken = undefined;
+        user.resetTokenExpiry = undefined;
+        
         await user.save();
-        res.status(200).json({ message: 'Password successfully reset. You can now log in with your new password.' });
+
+        res.status(200).json({ message: 'Password has been reset successfully' });
     } catch (error) {
-        console.error('Error resetting password:', error);
+        console.error('Server error:', error);
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+
+
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router;

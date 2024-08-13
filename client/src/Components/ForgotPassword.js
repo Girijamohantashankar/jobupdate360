@@ -7,16 +7,21 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+
         try {
             const response = await axios.post('http://localhost:5000/api/forgot/forgot-password', { email });
             toast.success(response.data.message);
-            setTimeout(() => navigate('/login'), 3000); 
+            setTimeout(() => navigate('/login'), 3000);
         } catch (err) {
             toast.error(err.response ? err.response.data.message : 'Error sending reset link');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -33,7 +38,13 @@ function ForgotPassword() {
                     required
                     className="forgot-password-input"
                 />
-                <button type="submit" className="forgot-password-button">Send Reset Link</button>
+                <button
+                    type="submit"
+                    className="forgot-password-button"
+                    disabled={loading}
+                >
+                    {loading ? 'Sending...' : 'Send Reset Link'}
+                </button>
                 <p>Back to the <Link to="/login">Login</Link></p>
             </form>
             <ToastContainer />

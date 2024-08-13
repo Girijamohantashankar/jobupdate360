@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/logo.png';
 import { AuthContext } from '../AuthContext';
@@ -78,13 +78,13 @@ function Navbar() {
     <div className="navbar_container">
       <div className="nav_bar">
         <div className="logo">
-          <Link to="/">
+          <NavLink exact to="/" activeClassName="active">
             <img src={logo} alt="logo" className="logo_img" />
-          </Link>
-          <Link className="Link br_btn" to="/">Home</Link>
-          <Link className="Link br_btn" to="/feedbackShow">People's Feedback</Link>
+          </NavLink>
+          <NavLink exact to="/" className="Link br_btn" activeClassName="active">Home</NavLink>
+          <NavLink to="/feedbackShow" className="Link br_btn" activeClassName="active">People's Feedback</NavLink>
           {isLoggedIn && (
-            <Link className="Link br_btn" to="/dashboard">Dashboard</Link>
+            <NavLink to="/dashboard" className="Link br_btn" activeClassName="active">Dashboard</NavLink>
           )}
         </div>
 
@@ -97,16 +97,16 @@ function Navbar() {
                 </span>
                 {showDropdown && (
                   <div className="dropdown_menu" ref={dropdownRef}>
-                    <Link to="/profile" className="dropdown_item"><i className="fa-solid fa-user"></i> Profile</Link>
-                    <Link to="/" className="dropdown_item"><i className="fa-solid fa-house"></i> Home</Link>
-                    <Link to="/dashboard" className="dropdown_item"><i className="fa-solid fa-chart-line"></i> Dashboard</Link>
+                    <NavLink to="/profile" className="dropdown_item" activeClassName="active"><i className="fa-solid fa-user"></i> Profile</NavLink>
+                    <NavLink exact to="/" className="dropdown_item" activeClassName="active"><i className="fa-solid fa-house"></i> Home</NavLink>
+                    <NavLink to="/dashboard" className="dropdown_item" activeClassName="active"><i className="fa-solid fa-chart-line"></i> Dashboard</NavLink>
                     <div className="dropdown_item" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Logout</div>
                   </div>
                 )}
               </li>
             ) : (
               <li>
-                <Link className="Link br_btn" to="/signup">Employee | Post Job</Link>
+                <NavLink to="/signup" className="Link br_btn" activeClassName="active">Employee | Post Job</NavLink>
               </li>
             )}
           </ul>

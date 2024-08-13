@@ -28,9 +28,11 @@ import ResetPassword from './Components/ResetPassword';
 function App() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
+  const showNavbar = !['/login', '/signup', '/admin', "/reportJob", "/viewAllUsers", "/feedbackView", "/forgot_password", "/reset-password/:token"].includes(location.pathname) &&
+    !/^\/job\/[^/]+$/.test(location.pathname) &&
+    !/^\/reset-password\/[^/]+$/.test(location.pathname);
 
-  const showNavbar = !['/login', '/signup', '/admin', "/reportJob", "/viewAllUsers", "/feedbackView","/forgot_password"].includes(location.pathname) && !/^\/job\/[^/]+$/.test(location.pathname);
-
+    
   return (
     <div>
       {showNavbar && <Navbar />}
@@ -55,8 +57,8 @@ function App() {
         <Route path="/feedbackView" element={isLoggedIn ? <FeedbackView /> : <Navigate to="/login" />} />
         <Route path="/feedbackShow" element={<PeoplesReview />} />
         <Route path="/appliedPeople" element={isLoggedIn ? <ApplyPeople /> : <Navigate to="/login" />} />
-        <Route path="/view-applied-candidates/:jobId" element={ isLoggedIn ? <Applicants /> : <Navigate to="/login" />} />
-        <Route path="/profile" element={ isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/view-applied-candidates/:jobId" element={isLoggedIn ? <Applicants /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
     </div>
   );

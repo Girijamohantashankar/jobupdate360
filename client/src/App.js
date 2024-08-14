@@ -23,6 +23,7 @@ import ApplyPeople from './Components/ApplyPeople';
 import Applicants from './Components/Applicants';
 import ForgotPassword from './Components/ForgotPassword';
 import ResetPassword from './Components/ResetPassword';
+import Contactus from './Components/Contactus';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
     !/^\/job\/[^/]+$/.test(location.pathname) &&
     !/^\/reset-password\/[^/]+$/.test(location.pathname);
 
-    
+
   return (
     <div>
       {showNavbar && <Navbar />}
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/contact-us" element={<Contactus />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />
         <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
         <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />

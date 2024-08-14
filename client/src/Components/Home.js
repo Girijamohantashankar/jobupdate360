@@ -9,6 +9,7 @@ import Loader from './Loader';
 
 
 
+
 function Home() {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -166,72 +167,69 @@ function Home() {
             </div>
           </div>
           <div className="dropdown_container">
-            <div className="dropdown">
-              <div className="dropdown_selected">
-                {selectedDate || "Date of Post"}
-              </div>
-              <div className="dropdown_options">
-                <div onClick={() => setSelectedDate("24 hours")}>Last 24 hours</div>
-                <div onClick={() => setSelectedDate("7 days")}>Last 7 days</div>
-                <div onClick={() => setSelectedDate("30 days")}>Last 30 days</div>
-              </div>
-            </div>
-            <div className="dropdown">
-              <div className="dropdown_selected">
-                {selectedRemote || "Remote Job"}
-              </div>
-              <div className="dropdown_options">
-                <div onClick={() => setSelectedRemote("Remote")}>Remote only</div>
-                <div onClick={() => setSelectedRemote("In-office")}>In-office</div>
-                <div onClick={() => setSelectedRemote("Hybrid")}>Hybrid</div>
-              </div>
-            </div>
-            <div className="dropdown">
-              <div className="dropdown_selected">
-                {selectedType || "Type of Job"}
-              </div>
-              <div className="dropdown_options">
-                <div onClick={() => setSelectedType("Full-Time")}>Full-time</div>
-                <div onClick={() => setSelectedType("Part-Time")}>Part-time</div>
-                <div onClick={() => setSelectedType("Contract")}>Contract</div>
-                <div onClick={() => setSelectedType("Temporary")}>Temporary</div>
-                <div onClick={() => setSelectedType("IT")}>IT</div>
-                <div onClick={() => setSelectedType("Govt")}>Govt</div>
-              </div>
-            </div>
-            <div className="dropdown">
-              <div className="dropdown_selected">{selectedPay || "Pay"}</div>
-              <div className="dropdown_options">
-                <div onClick={() => setSelectedPay("15000")}>₹15,000.00+/month</div>
-                <div onClick={() => setSelectedPay("19166")}>₹19,166.67+/month</div>
-                <div onClick={() => setSelectedPay("22500")}>₹22,500.00+/month</div>
-                <div onClick={() => setSelectedPay("27500")}>₹27,500.00+/month</div>
-                <div onClick={() => setSelectedPay("35000")}>₹35,000.00+/month</div>
-              </div>
-            </div>
-            <div className="dropdown">
-              <div className="dropdown_selected">
-                {selectedEducation || "Education Level"}
-              </div>
-              <div className="dropdown_options">
-                <div onClick={() => setSelectedEducation("High School")}>
-                  High School
-                </div>
-                <div onClick={() => setSelectedEducation("Associate's Degree")}>
-                  Associate's Degree
-                </div>
-                <div onClick={() => setSelectedEducation("Bachelor's Degree")}>
-                  Bachelor's Degree
-                </div>
-                <div onClick={() => setSelectedEducation("Master's Degree")}>
-                  Master's Degree
-                </div>
-                <div onClick={() => setSelectedEducation("Doctorate")}>
-                  Doctorate
-                </div>
-              </div>
-            </div>
+            <select
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="dropdown"
+            >
+              <option value="" disabled>Date of Post</option>
+              <option value="24 hours">Last 24 hours</option>
+              <option value="7 days">Last 7 days</option>
+              <option value="30 days">Last 30 days</option>
+            </select>
+
+            <select
+              value={selectedRemote}
+              onChange={(e) => setSelectedRemote(e.target.value)}
+              className="dropdown"
+            >
+              <option value="" disabled>Remote Job</option>
+              <option value="Remote">Remote only</option>
+              <option value="In-office">In-office</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="dropdown"
+            >
+              <option value="" disabled>Type of Job</option>
+              <option value="Full-Time">Full-time</option>
+              <option value="Part-Time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Temporary">Temporary</option>
+              <option value="IT">IT</option>
+              <option value="Govt">Govt</option>
+            </select>
+
+            <select
+              value={selectedPay}
+              onChange={(e) => setSelectedPay(e.target.value)}
+              className="dropdown"
+            >
+              <option value="" disabled>Pay</option>
+              <option value="15000">₹15,000.00+/month</option>
+              <option value="19166">₹19,166.67+/month</option>
+              <option value="22500">₹22,500.00+/month</option>
+              <option value="27500">₹27,500.00+/month</option>
+              <option value="35000">₹35,000.00+/month</option>
+            </select>
+
+            <select
+              value={selectedEducation}
+              onChange={(e) => setSelectedEducation(e.target.value)}
+              className="dropdown"
+            >
+              <option value="" disabled>Education Level</option>
+              <option value="High School">High School</option>
+              <option value="Associate's Degree">Associate's Degree</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="Doctorate">Doctorate</option>
+            </select>
           </div>
+
 
           <div className="cards_content">
             <div className="cards">
@@ -321,7 +319,7 @@ function Home() {
               </div>
             )}
           </div>
-      
+         
           <FeedbackModal />
         </>
       )}

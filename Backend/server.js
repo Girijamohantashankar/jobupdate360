@@ -35,4 +35,7 @@ app.use('/api/forgot', require('./routes/forgotRoutes'));
 
 
 
+
+
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -33,7 +33,8 @@ router.post('/forgot-password', async (req, res) => {
         }
         const resetToken = crypto.randomBytes(32).toString('hex');
         const encryptedResetToken = CryptoJS.AES.encrypt(resetToken, process.env.ENCRYPTION_SECRET_KEY).toString();
-        const resetTokenExpiry = Date.now() + 3600000;
+        // const resetTokenExpiry = Date.now() + 3600000;
+        const resetTokenExpiry = Date.now() + 2 * 60 * 1000;
         user.resetToken = encryptedResetToken;
         user.resetTokenExpiry = resetTokenExpiry;
         await user.save();

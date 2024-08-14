@@ -11,9 +11,6 @@ const sendWelcomeEmail = require('../utils/mailer');
 
 
 
-
-
-
 // Login route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;

@@ -72,12 +72,11 @@ router.post('/reset-password/:resetToken', async (req, res) => {
     }
 
     try {
-        // Find the user with the corresponding reset token
         const users = await User.find({});
         let user = null;
 
         for (let i = 0; i < users.length; i++) {
-            if (users[i].resetToken) { // Check if resetToken is not null or undefined
+            if (users[i].resetToken) {
                 const decryptedToken = CryptoJS.AES.decrypt(users[i].resetToken, process.env.ENCRYPTION_SECRET_KEY).toString(CryptoJS.enc.Utf8);
                 if (decryptedToken === resetToken) {
                     user = users[i];
@@ -89,21 +88,15 @@ router.post('/reset-password/:resetToken', async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: 'Invalid or expired reset token' });
         }
-
-        // Check if the reset token has expired
         if (user.resetTokenExpiry < Date.now()) {
             return res.status(400).json({ message: 'Reset token has expired' });
         }
 
-        // Hash the new password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-        // Update the user's password and remove the reset token and expiry
-        user.password = hashedPassword;  // Save the hashed password
+        user.password = newPassword;  
         user.resetToken = undefined;
         user.resetTokenExpiry = undefined;
-        
         await user.save();
 
         res.status(200).json({ message: 'Password has been reset successfully' });

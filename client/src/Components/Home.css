@@ -234,6 +234,7 @@
 }
 
 .report_icon {
+  margin: 10px 0;
   background-color: #ddd;
   padding: 9px 10px;
   width: 114px;
@@ -302,6 +303,30 @@
   align-items: flex-start;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  color: #007bff;
+}
+
+.pagination li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination li.disabled {
+  color: #ddd;
+  cursor: not-allowed;
+}
 
 
 @media (max-width: 768px) {

@@ -1,6 +1,11 @@
 .monthly_graph {
-    margin: 40px 20px 20px 20px;
-    background-color: #fff;
-    padding: 5px;
-    border-radius: 6px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 6px;
+  height: 300px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

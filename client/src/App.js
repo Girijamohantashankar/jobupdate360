@@ -24,24 +24,27 @@ import Applicants from './Components/Applicants';
 import ForgotPassword from './Components/ForgotPassword';
 import ResetPassword from './Components/ResetPassword';
 import Contactus from './Components/Contactus';
+import Footer from './Components/footer';
+import About from './Components/About';
 
 
 function App() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
-  const showNavbar = !['/login', '/signup', '/admin', "/reportJob", "/viewAllUsers", "/feedbackView", "/forgot_password", "/reset-password/:token"].includes(location.pathname) &&
+  const  showNavbarAndFooter = !['/login', '/signup', '/admin', "/reportJob", "/viewAllUsers", "/feedbackView", "/forgot_password", "/reset-password/:token"].includes(location.pathname) &&
     !/^\/job\/[^/]+$/.test(location.pathname) &&
     !/^\/reset-password\/[^/]+$/.test(location.pathname);
 
 
   return (
     <div>
-      {showNavbar && <Navbar />}
+      {showNavbarAndFooter && <Navbar />}
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact-us" element={<Contactus />} />
+        <Route path="/about" element={<About />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />
         <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
         <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
@@ -62,6 +65,7 @@ function App() {
         <Route path="/view-applied-candidates/:jobId" element={isLoggedIn ? <Applicants /> : <Navigate to="/login" />} />
         <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
+      {showNavbarAndFooter && <Footer />}
     </div>
   );
 }

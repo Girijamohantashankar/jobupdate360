@@ -118,7 +118,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="form-group remember_btn">
+        <div className="form-group1 remember_btn">
           <input
             type="checkbox"
             id="remember"

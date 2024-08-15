@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; 
 import "./Contactus.css";
+import Loader from './Loader';
 
 function Contactus() {
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+
+
+
   return (
     <div className="contact-page">
       <div className="contact-left">
@@ -11,16 +28,16 @@ function Contactus() {
         <div className="social-media">
           <h3>Follow Us</h3>
           <div className="social-icons">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/people/Job-Update-360/100095076759386/?mibextid=2JQ9oc" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-facebook"></i>
             </a>
-            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-              <i className="fa-brands fa-twitter"></i>
+            <a href="https://www.youtube.com/@JobUpdate360" target="_blank" rel="noopener noreferrer">
+              <i className="fa-brands fa-youtube"></i>
             </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/jobupdate_360/" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-instagram"></i>
             </a>
-            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://in.linkedin.com/company/job-update-360" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-linkedin"></i>
             </a>
           </div>
@@ -29,7 +46,7 @@ function Contactus() {
         <div className="map-container">
           <h3>Our Location</h3>
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.086417307788!2d-122.41941548468158!3d37.774929779759955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085818c5f40c2c7%3A0x220cb0a39f0ecdb4!2sGoogleplex!5e0!3m2!1sen!2sus!4v1617814097061!5m2!1sen!2sus" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109493.72659319632!2d75.67182918194094!3d30.95152978937506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a86e98b5a3e71%3A0x2acbcb7ea1e2fe00!2sGuru%20Arjan%20Dev%20Nagar%2C%20Ludhiana%2C%20Punjab%20141008!5e0!3m2!1sen!2sin!4v1723726381943!5m2!1sen!2sin" 
             width="100%" 
             height="250" 
             style={{ border: 0 }} 
@@ -37,6 +54,7 @@ function Contactus() {
             loading="lazy" 
             title="Google Maps Location">
           </iframe>
+          
         </div>
       </div>
 

@@ -54,7 +54,9 @@
 form {
   margin-right: 20px;
 }
-
+.remember_btn input{
+  margin-top: 10px;
+}
 .form-group input:focus,
 .form-group input:hover {
   border: 1px solid #007bff;

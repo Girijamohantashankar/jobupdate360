@@ -84,6 +84,7 @@ function Navbar() {
           <NavLink exact to="/" className="Link br_btn" activeClassName="active">Home</NavLink>
           <NavLink to="/feedbackShow" className="Link br_btn" activeClassName="active">People's Feedback</NavLink>
           <NavLink to="/contact-us" className="Link br_btn" activeClassName="active">Contact us</NavLink>
+          <NavLink to="/about" className="Link br_btn" activeClassName="active">About</NavLink>
           {isLoggedIn && (
             <NavLink to="/dashboard" className="Link br_btn" activeClassName="active">Dashboard</NavLink>
           )}

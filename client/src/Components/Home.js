@@ -6,17 +6,18 @@ import { Link, useNavigate } from "react-router-dom";
 import ReportModal from './ReportModal';
 import FeedbackModal from "./FeedbackModal";
 import Loader from './Loader';
-
-
-
+import ReactPaginate from 'react-paginate';
 
 function Home() {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
+  const [currentJobs, setCurrentJobs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [jobsPerPage] = useState(10);
+  const [pageCount, setPageCount] = useState(0);
   const [selectedJob, setSelectedJob] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
-
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedRemote, setSelectedRemote] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -26,19 +27,28 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Pagination calculations
+  useEffect(() => {
+    const offset = currentPage * jobsPerPage;
+    const paginatedJobs = filteredJobs.slice(offset, offset + jobsPerPage);
+    setCurrentJobs(paginatedJobs);
+    setPageCount(Math.ceil(filteredJobs.length / jobsPerPage));
+  }, [currentPage, filteredJobs, jobsPerPage]);
 
+  // Handle page click
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
 
-
-
+  // Fetch jobs data
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "http://localhost:5000/api/job/allJobs"
-        );
+        const response = await axios.get("http://localhost:5000/api/job/allJobs");
         setJobs(response.data);
         setFilteredJobs(response.data);
+        setCurrentPage(0);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -48,44 +58,38 @@ function Home() {
     fetchJobs();
   }, []);
 
-
-
+  // Filtering logic
   useEffect(() => {
     const results = jobs.filter((job) => {
       const matchesSearchTerm =
-        (job.jobTitle &&
-          job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (job.companyName &&
-          job.companyName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (job.location &&
-          job.location.toLowerCase().includes(searchTerm.toLowerCase()));
+        (job.jobTitle && job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (job.companyName && job.companyName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (job.location && job.location.toLowerCase().includes(searchTerm.toLowerCase()));
 
       const matchesDate =
         !selectedDate ||
         (selectedDate === "24 hours" &&
-          new Date(job.applyDate) >=
-          new Date(Date.now() - 24 * 60 * 60 * 1000)) ||
+          new Date(job.applyDate) >= new Date(Date.now() - 24 * 60 * 60 * 1000)) ||
         (selectedDate === "7 days" &&
-          new Date(job.applyDate) >=
-          new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) ||
+          new Date(job.applyDate) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) ||
         (selectedDate === "30 days" &&
-          new Date(job.applyDate) >=
-          new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+          new Date(job.applyDate) >= new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
 
       const matchesRemote =
         !selectedRemote ||
         job.jobType.toLowerCase().includes(selectedRemote.toLowerCase());
+
       const matchesType =
         !selectedType ||
         job.jobType.toLowerCase().includes(selectedType.toLowerCase());
+
       const matchesPay =
         !selectedPay ||
         parseInt(job.salary.replace(/[^0-9]/g, "")) >= parseInt(selectedPay);
+
       const matchesEducation =
         !selectedEducation ||
-        job.qualification
-          .toLowerCase()
-          .includes(selectedEducation.toLowerCase());
+        job.qualification.toLowerCase().includes(selectedEducation.toLowerCase());
 
       return (
         matchesSearchTerm &&
@@ -98,6 +102,7 @@ function Home() {
     });
 
     setFilteredJobs(results);
+    setCurrentPage(0);
   }, [
     searchTerm,
     searchLocation,
@@ -119,14 +124,15 @@ function Home() {
     setSelectedEducation("");
     setFilteredJobs(jobs);
     setSelectedJob(null);
+    setCurrentPage(0);
   };
 
   const handleApplyClick = (url) => {
     if (url) {
       window.open(url, "_blank");
     } else {
-      localStorage.setItem('System_config', selectedJob._id)
-      localStorage.setItem('Current_Ip_address', selectedJob.createdBy)
+      localStorage.setItem('System_config', selectedJob._id);
+      localStorage.setItem('Current_Ip_address', selectedJob.createdBy);
       navigate("/customform");
     }
   };
@@ -230,10 +236,9 @@ function Home() {
             </select>
           </div>
 
-
           <div className="cards_content">
             <div className="cards">
-              {filteredJobs.map((job) => (
+              {currentJobs.map((job) => (
                 <div
                   key={job._id}
                   className={`card ${selectedJob?._id === job._id ? "active" : ""}`}
@@ -272,11 +277,12 @@ function Home() {
             {selectedJob && (
               <div className="job_details">
                 <h2>{selectedJob.jobTitle}</h2>
-
                 <p>
-                  <b>Company:</b> {selectedJob.companyName}  <Link className="web_icon" to={selectedJob.webUrl} target="_blank"><i className="fas fa-external-link-alt"></i></Link>
+                  <b>Company:</b> {selectedJob.companyName}  
+                  <Link className="web_icon" to={selectedJob.webUrl} target="_blank">
+                    <i className="fas fa-external-link-alt"></i>
+                  </Link>
                 </p>
-
                 <p>
                   <b>Location:</b> {selectedJob.location}
                 </p>
@@ -287,27 +293,19 @@ function Home() {
                   <button onClick={() => handleApplyClick(selectedJob.websiteUrl)}>Apply Now</button>
                 </div>
                 <div className="job_description_details">
-                  <p>
-                    <b>Type:</b> {selectedJob.jobType}
-                  </p>
+                  <p><b>Type:</b> {selectedJob.jobType}</p>
                   <p><strong>Qualification:</strong> {selectedJob.qualification}</p>
-                  <p>
-                    <b>Shift:</b> {selectedJob.Shift}
-                  </p>
+                  <p><b>Shift:</b> {selectedJob.Shift}</p>
                   <p><strong>Apply Date:</strong> {new Date(selectedJob.applyDate).toLocaleDateString()}</p>
                   <p><strong>Last Date:</strong> {new Date(selectedJob.expireDate).toLocaleDateString()}</p>
                   <p><strong>Job Description:</strong></p>
-                  <p className="job_description">
-                    {selectedJob.description}
-                  </p>
+                  <p className="job_description">{selectedJob.description}</p>
                   <p><strong>Selection Process:</strong></p>
                   <p className="job_description">{selectedJob.selectionProcess}</p>
                   <p><strong>Technology:</strong> {selectedJob.technology.join(', ')}</p>
                   <p><strong>Shift:</strong> {selectedJob.Shift}</p>
                   <p><strong>Application Fee:</strong> {selectedJob.applicationFee}</p>
-                  <p>
-                    <b>Posted:</b> {getRelativeTime(selectedJob.applyDate)}
-                  </p>
+                  <p><b>Posted:</b> {getRelativeTime(selectedJob.applyDate)}</p>
                 </div>
                 <div className="report_jobs">
                   <div className="report_icon" onClick={handleOpenModal}>
@@ -319,8 +317,21 @@ function Home() {
               </div>
             )}
           </div>
-         
+
           <FeedbackModal />
+          <div className="pagination">
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
+          </div>
         </>
       )}
     </div>

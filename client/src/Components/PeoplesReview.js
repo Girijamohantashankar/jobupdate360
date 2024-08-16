@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './PeoplesReview.css';
 import StarRating from '../Components/StarRating';
 import Loader from '../Components/Loader';
+import nofound from '../assets/noresult.jpg'
 
 function PeoplesReview() {
     const [feedbacks, setFeedbacks] = useState([]);
@@ -32,9 +33,9 @@ function PeoplesReview() {
         if (capitalizedLocalPart.length <= 6) return capitalizedLocalPart;
         return `${capitalizedLocalPart.substring(0, 5)}...`;
     };
-    
-   
-    
+
+
+
     return (
         <div className="peoples-review-container">
             {loading ? (
@@ -52,7 +53,10 @@ function PeoplesReview() {
                             </div>
                         ))
                     ) : (
-                        <p>No feedbacks found.</p>
+                        <div className='not_found'>
+                            <img className='not_found_img' src={nofound} alt='nofound' />
+                            <p className='no_feedback'>No feedbacks found.</p>
+                        </div>
                     )}
                 </>
             )}

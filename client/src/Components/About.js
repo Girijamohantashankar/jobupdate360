@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './About.css';
 import Loader from './Loader';
-// import projectImage from '../assets/project-image.jpg'; 
-// import teamImage from '../assets/team-image.jpg'; 
+import projectImage from '../assets/mission.png'; 
+import teamImage from '../assets/team.jpg'; 
 
 function About() {
     const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ function About() {
         <p>Your one-stop solution for all job updates and career resources.</p>
       </header>
       <section className="about-section">
-        <img  alt="Project Overview" className="about-image" />
+        <img src={projectImage}  alt="Project Overview" className="about-image" />
         <div className="about-content">
           <h2>Our Mission</h2>
           <p>
@@ -35,7 +35,6 @@ function About() {
         </div>
       </section>
       <section className="team-section">
-        <img  alt="Our Team" className="team-image" />
         <div className="team-content">
           <h2>Meet Our Team</h2>
           <p>
@@ -45,6 +44,7 @@ function About() {
             We believe that every job seeker deserves access to the right tools and support to achieve their career goals. Our team’s dedication and expertise drive our continuous efforts to innovate and improve the job search experience.
           </p>
         </div>
+        <img src={teamImage} alt="Our Team" className="team-image" />
       </section>
       <footer className="about-footer">
         <p>&copy; 2024 Job Update 360. All rights reserved.</p>

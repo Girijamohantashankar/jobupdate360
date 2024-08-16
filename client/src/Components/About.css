@@ -1,6 +1,6 @@
 .about-container {
     max-width: 1200px;
-    margin: 100px auto;
+    margin: 80px auto;
     padding: 20px;
     font-family: Arial, sans-serif;
   }
@@ -12,7 +12,8 @@
   
   .about-header h1 {
     font-size: 36px;
-    color: #333;
+    color: #03a9f4;
+    text-decoration: underline;
   }
   
   .about-header p {
@@ -24,23 +25,50 @@
     display: flex;
     align-items: center;
     margin-bottom: 40px;
+    justify-content: space-between;
   }
   
   .about-image, .team-image {
-    width: 50%;
-    border-radius: 8px;
+    width: 40%;
+    border-radius: 15px;
     margin-right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
   
   .about-content, .team-content {
     width: 50%;
   }
+  @keyframes slideIn {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
   
   .about-content h2, .team-content h2 {
     font-size: 28px;
-    color: #333;
+    color: #03a9f4;
     margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+    display: inline-block; 
   }
+  
+  .about-content h2::after, .team-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #03a9f4;
+    animation: slideIn 2s linear infinite;
+    transition: width 2s ease-in-out;
+  }
+  
+  
   
   .about-content p, .team-content p {
     font-size: 16px;

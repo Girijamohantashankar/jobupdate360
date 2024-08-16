@@ -5,6 +5,7 @@ import Loader from '../Components/Loader';
 import report from '../assets/report.png';
 import allUsers from '../assets/user-group-296.png';
 import feedback from '../assets/feedback.png';
+import contact from '../assets/viewContact.png';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
@@ -156,7 +157,7 @@ function Admin() {
         <div className='dashboard_cards'>
           <Link to="/reportJob" className='dashboard_card'>
             <img src={report} className='people_img' alt='report' />
-            <p className='dashboard_card_title'>Report Jobs</p>
+            <p className='dashboard_card_title'>View Report Jobs</p>
           </Link>
           <Link to='/viewAllUsers' className='dashboard_card'>
             <img src={allUsers} className='job_img' alt='png' />
@@ -165,6 +166,10 @@ function Admin() {
           <Link to='/feedbackView' className='dashboard_card'>
             <img src={feedback} className='job_img' alt='png' />
             <p className='dashboard_card_title'>View Feedback</p>
+          </Link>
+          <Link to='/viewContact' className='dashboard_card'>
+            <img src={contact} className='job_img' alt='png' />
+            <p className='dashboard_card_title'>View Contact Requests</p>
           </Link>
 
           <div className='dashboard_card_circle'>

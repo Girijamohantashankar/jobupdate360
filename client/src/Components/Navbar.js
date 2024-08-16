@@ -60,7 +60,6 @@ function Navbar() {
     setShowDropdown(!showDropdown);
   };
 
-  // Close dropdown when clicking outside
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
@@ -78,15 +77,15 @@ function Navbar() {
     <div className="navbar_container">
       <div className="nav_bar">
         <div className="logo">
-          <NavLink exact to="/" activeClassName="active">
+          <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>
             <img src={logo} alt="logo" className="logo_img" />
           </NavLink>
-          <NavLink exact to="/" className="Link br_btn" activeClassName="active">Home</NavLink>
-          <NavLink to="/feedbackShow" className="Link br_btn" activeClassName="active">People's Feedback</NavLink>
-          <NavLink to="/contact-us" className="Link br_btn" activeClassName="active">Contact us</NavLink>
-          <NavLink to="/about" className="Link br_btn" activeClassName="active">About</NavLink>
+          <NavLink to="/" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`}>Home</NavLink>
+          <NavLink to="/feedbackShow" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`}>People's Feedback</NavLink>
+          <NavLink to="/contact-us" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`}>Contact us</NavLink>
+          <NavLink to="/about" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`}>About</NavLink>
           {isLoggedIn && (
-            <NavLink to="/dashboard" className="Link br_btn" activeClassName="active">Dashboard</NavLink>
+            <NavLink to="/dashboard" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
           )}
         </div>
 
@@ -99,16 +98,16 @@ function Navbar() {
                 </span>
                 {showDropdown && (
                   <div className="dropdown_menu" ref={dropdownRef}>
-                    <NavLink to="/profile" className="dropdown_item" activeClassName="active"><i className="fa-solid fa-user"></i> Profile</NavLink>
-                    <NavLink exact to="/" className="dropdown_item" activeClassName="active"><i className="fa-solid fa-house"></i> Home</NavLink>
-                    <NavLink to="/dashboard" className="dropdown_item" activeClassName="active"><i className="fa-solid fa-chart-line"></i> Dashboard</NavLink>
+                    <NavLink to="/profile" className={({ isActive }) => `dropdown_item ${isActive ? 'active' : ''}`}><i className="fa-solid fa-user"></i> Profile</NavLink>
+                    <NavLink to="/" className={({ isActive }) => `dropdown_item ${isActive ? 'active' : ''}`}><i className="fa-solid fa-house"></i> Home</NavLink>
+                    <NavLink to="/dashboard" className={({ isActive }) => `dropdown_item ${isActive ? 'active' : ''}`}><i className="fa-solid fa-chart-line"></i> Dashboard</NavLink>
                     <div className="dropdown_item" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Logout</div>
                   </div>
                 )}
               </li>
             ) : (
               <li>
-                <NavLink to="/signup" className="Link br_btn" activeClassName="active">Employee | Post Job</NavLink>
+                <NavLink to="/signup" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`}>Employee | Post Job</NavLink>
               </li>
             )}
           </ul>

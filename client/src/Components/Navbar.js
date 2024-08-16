@@ -74,7 +74,7 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="navbar_container">
+    <div className="navbar_container">  
       <div className="nav_bar">
         <div className="logo">
           <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>

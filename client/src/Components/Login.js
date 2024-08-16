@@ -53,7 +53,7 @@ function Login() {
         setLoading(false);
         setIsLoggedIn(true);
         setUserName(email);
-        navigate('/admin');
+        navigate("/admin-98git-76hgt-nhb-th125-6849git-fg00-67wvb-p07");
         return;
       }
 

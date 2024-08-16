@@ -32,7 +32,7 @@ import ViewContact from './AdminPage/ViewContact';
 function App() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
-  const  showNavbarAndFooter = !['/login', '/signup', '/admin', "/reportJob", "/viewAllUsers", "/feedbackView", "/forgot_password", "/reset-password/:token","/viewContact"].includes(location.pathname) &&
+  const showNavbarAndFooter = !['/login', '/signup', "/admin-98git-76hgt-nhb-th125-6849git-fg00-67wvb-p07", "/reportJob-j78-ht88-gir-9hrh-72th8-de0we", '/viewAllUsers-756bhd-76bh-th687-gdb78-gii-99re', '/feedbackView-74ht-2024-to-2025bdg-tu45-ebt09', "/forgot_password", "/reset-password/:token", "/viewContact-2024-hyb-45hd-new78-243-ngs45-jbf12-8jnh-ndh09"].includes(location.pathname) &&
     !/^\/job\/[^/]+$/.test(location.pathname) &&
     !/^\/reset-password\/[^/]+$/.test(location.pathname);
 
@@ -41,7 +41,7 @@ function App() {
     <div>
       {showNavbarAndFooter && <Navbar />}
       <Routes>
-        <Route  path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact-us" element={<Contactus />} />
@@ -55,17 +55,17 @@ function App() {
         <Route path="/viewJobs/EditJob/:id" element={isLoggedIn ? <JobsEdit /> : <Navigate to="/login" />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/customform" element={<CustomForm />} />
-        <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
-        <Route path="/reportJob" element={isLoggedIn ? <Report /> : <Navigate to="/login" />} />
+        <Route path="/admin-98git-76hgt-nhb-th125-6849git-fg00-67wvb-p07" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
+        <Route path="/reportJob-j78-ht88-gir-9hrh-72th8-de0we" element={isLoggedIn ? <Report /> : <Navigate to="/login" />} />
         <Route path="/job/:id" element={isLoggedIn ? <ReportView /> : <Navigate to="/login" />} />
-        <Route path="/viewAllUsers" element={isLoggedIn ? <ViewAllUser /> : <Navigate to="/login" />} />
+        <Route path='/viewAllUsers-756bhd-76bh-th687-gdb78-gii-99re' element={isLoggedIn ? <ViewAllUser /> : <Navigate to="/login" />} />
         <Route path="/feedback" element={<FeedbackModal />} />
-        <Route path="/feedbackView" element={isLoggedIn ? <FeedbackView /> : <Navigate to="/login" />} />
+        <Route path='/feedbackView-74ht-2024-to-2025bdg-tu45-ebt09' element={isLoggedIn ? <FeedbackView /> : <Navigate to="/login" />} />
         <Route path="/feedbackShow" element={<PeoplesReview />} />
         <Route path="/appliedPeople" element={isLoggedIn ? <ApplyPeople /> : <Navigate to="/login" />} />
         <Route path="/view-applied-candidates/:jobId" element={isLoggedIn ? <Applicants /> : <Navigate to="/login" />} />
         <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
-        <Route path="/viewContact" element={isLoggedIn ? <ViewContact /> : <Navigate to="/login" />} />
+        <Route path="/viewContact-2024-hyb-45hd-new78-243-ngs45-jbf12-8jnh-ndh09" element={isLoggedIn ? <ViewContact /> : <Navigate to="/login" />} />
       </Routes>
       {showNavbarAndFooter && <Footer />}
     </div>

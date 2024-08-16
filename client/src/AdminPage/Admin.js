@@ -155,19 +155,19 @@ function Admin() {
         <Loader />
       ) : (
         <div className='dashboard_cards'>
-          <Link to="/reportJob" className='dashboard_card'>
+          <Link to="/reportJob-j78-ht88-gir-9hrh-72th8-de0we" className='dashboard_card'>
             <img src={report} className='people_img' alt='report' />
             <p className='dashboard_card_title'>View Report Jobs</p>
           </Link>
-          <Link to='/viewAllUsers' className='dashboard_card'>
+          <Link to='/viewAllUsers-756bhd-76bh-th687-gdb78-gii-99re' className='dashboard_card'>
             <img src={allUsers} className='job_img' alt='png' />
             <p className='dashboard_card_title'>View All Users</p>
           </Link>
-          <Link to='/feedbackView' className='dashboard_card'>
+          <Link to='/feedbackView-74ht-2024-to-2025bdg-tu45-ebt09' className='dashboard_card'>
             <img src={feedback} className='job_img' alt='png' />
             <p className='dashboard_card_title'>View Feedback</p>
           </Link>
-          <Link to='/viewContact' className='dashboard_card'>
+          <Link to="/viewContact-2024-hyb-45hd-new78-243-ngs45-jbf12-8jnh-ndh09" className='dashboard_card'>
             <img src={contact} className='job_img' alt='png' />
             <p className='dashboard_card_title'>View Contact Requests</p>
           </Link>

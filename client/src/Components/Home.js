@@ -144,7 +144,9 @@ function Home() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
+  const handleCloseJobDetails = () => {
+    setSelectedJob(null);
+  };
   return (
     <div className="home_container">
       {loading ? (
@@ -160,14 +162,14 @@ function Home() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="job_location">
+            {/* <div className="job_location">
               <i className="fa-solid fa-location-dot"></i>
               <input
                 placeholder="Location"
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
               />
-            </div>
+            </div> */}
             <div className="job_search_btn">
               <button onClick={handleReset}>Reset</button>
             </div>
@@ -276,9 +278,12 @@ function Home() {
             </div>
             {selectedJob && (
               <div className="job_details">
+                <button className="close_button" onClick={handleCloseJobDetails}>
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
                 <h2>{selectedJob.jobTitle}</h2>
                 <p>
-                  <b>Company:</b> {selectedJob.companyName}  
+                  <b>Company:</b> {selectedJob.companyName}
                   <Link className="web_icon" to={selectedJob.webUrl} target="_blank">
                     <i className="fas fa-external-link-alt"></i>
                   </Link>

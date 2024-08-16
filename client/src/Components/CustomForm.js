@@ -160,6 +160,21 @@ function CustomForm() {
               <option value="Bachelor's Degree">Bachelor's Degree</option>
               <option value="Master's Degree">Master's Degree</option>
               <option value="PhD">PhD</option>
+                <option value="B.A">B.A</option>
+                <option value="B.Sc">B.Sc</option>
+                <option value="BTech/MCA/B.Sc">BTech/MCA/B.Sc</option>
+                <option value="MCA">MCA</option>
+                <option value="MCA">BTech</option>
+                <option value="B.Com">B.Com</option>
+                <option value="BBA">BBA</option>
+                <option value="BAF">BAF</option>
+                <option value="BBI">BBI</option>
+                <option value="BMS">BMS</option>
+                <option value="10th">10th</option>
+                <option value="Post Graduation">Post Graduation</option>
+                <option value="Any Graduation">Any Graduation</option>
+                <option value="Any Degree">Any Degree</option>
+                <option value="Others">Others</option>
             </select>
             <label>Total Years of Experience</label>
             <input type="text" name="totalExperience" value={formData.totalExperience} onChange={handleChange} />
@@ -198,7 +213,7 @@ function CustomForm() {
       {isSubmitted && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Thank you!</h2>
+            <h2>Thank you!🙏</h2>
             <p>Your application is submitted</p>
             <button onClick={closeModal}>Close</button>
           </div>

@@ -328,15 +328,28 @@
   cursor: not-allowed;
 }
 
+.job_search {
+  display: flex;
+  align-items: center;
+}
+
+.close_button {
+  position: absolute;
+  right: 20px;
+  background-color: #b1b1b1;
+  font-size: 13px;
+  display: none;
+}
 
 @media (max-width: 768px) {
   .dropdown_container {
-    flex-direction: column;
+    /* flex-direction: column;
+     */
     gap: 10px;
   }
 
   .dropdown {
-    width: 100%;
+    width: 40%;
     font-size: 14px;
   }
 
@@ -352,13 +365,15 @@
 
   .job_details {
     width: 90%;
-    margin-top: 20px;
-    position: static;
+    position: fixed;
+    top: 100px;
+    margin: auto;
     box-shadow: none;
+    z-index: 9999;
   }
 
   .search_box_content {
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     gap: 10px;
   }
@@ -371,6 +386,14 @@
   .job_search_btn button {
     width: 100%;
   }
+
+  .close_button {
+    display: block;
+  }
+
+
+
+
 }
 
 @media (max-width: 480px) {
@@ -387,7 +410,7 @@
 
   .job_search_btn button {
     font-size: 14px;
-    padding: 10px;
+    padding: 16px;
   }
 
   .cards {
@@ -397,5 +420,9 @@
   .job_details {
     width: 100%;
     padding: 10px;
+  }
+
+  .close_button {
+    display: block;
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './footer.css';
-import logo from '../assets/logo.png';
+import logo from '../assets/logofooter.png';
 
 function Footer() {
   return (
@@ -12,7 +12,7 @@ function Footer() {
         </div>
         <div className="footer-middle">
           <a href="/">Home</a>
-          <a href="/about">About Us</a>
+          <a href="/about">About</a>
           <a href="/services">Services</a>
           <a href="/contact-us">Contact</a>
         </div>

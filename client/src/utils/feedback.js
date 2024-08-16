@@ -11,8 +11,8 @@ export const setInitialVisitTime = () => {
 export const hasOneHourPassed = () => {
     const lastVisit = parseInt(localStorage.getItem(LAST_VISIT_KEY), 10);
     const now = new Date().getTime();
-    return (now - lastVisit) >= 2000;
-    //   return (now - lastVisit) >= 3600000;
+    // return (now - lastVisit) >= 2000;
+      return (now - lastVisit) >= 3600000;
 };
 
 export const hasGivenFeedback = () => {

@@ -297,6 +297,11 @@ function CreateJob() {
               <option value="C++">C++</option>
               <option value="Python">Python</option>
               <option value="Vue js">Vue js</option>
+              <option value="Html5">Html5</option>
+              <option value="Vue js">CSS3</option>
+              <option value="Javascript">Javascript</option>
+              <option value="Bootstrap">Bootstrap</option>
+              <option value="Material UI">Material UI</option>
               <option value="Others">Others</option>
             </select>
             <div className="selected_technologies">

@@ -82,3 +82,12 @@
     color: #666;
   }
   
+  @media (max-width: 768px) {
+    .about-section, .team-section{
+      display: inline-block;
+      margin: auto;
+    }
+    .about-content, .team-content{
+      width: 100%;
+    }
+  }

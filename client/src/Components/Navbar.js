@@ -9,6 +9,7 @@ function Navbar() {
   const { isLoggedIn, setIsLoggedIn, userName, setUserName } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -73,9 +74,45 @@ function Navbar() {
     };
   }, []);
 
+
+
+
+  const toggleMobileMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <div className="navbar_container">  
+    <div className="navbar_container">
       <div className="nav_bar">
+
+        <div className='toggle_btn'>
+          <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </div>
+        </div>
+
+
+        {isMenuOpen && (
+          <div className={`mobile_nav_item ${isMenuOpen ? 'open' : 'closed'}`}>
+            <div className='job_log'>
+              <img src={logo} alt="logo" className="logo_img" />
+              <span>Jobupdate360</span>
+            </div>
+            <NavLink to="/" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`} onClick={closeMobileMenu}>Home</NavLink>
+            <NavLink to="/feedbackShow" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`} onClick={closeMobileMenu}>People's Feedback</NavLink>
+            <NavLink to="/contact-us" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`} onClick={closeMobileMenu}>Contact us</NavLink>
+            <NavLink to="/about" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`} onClick={closeMobileMenu}>About</NavLink>
+            {isLoggedIn && (
+              <NavLink to="/dashboard" className={({ isActive }) => `Link br_btn ${isActive ? 'active' : ''}`} onClick={closeMobileMenu}>Dashboard</NavLink>
+            )}
+          </div>
+        )}
+
         <div className="logo">
           <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>
             <img src={logo} alt="logo" className="logo_img" />

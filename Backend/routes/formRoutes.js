@@ -6,9 +6,6 @@ const upload = require('../middleware/multerConfig');
 
 router.post('/submit-form', upload.single('pdf'), async (req, res) => {
     try {
-        console.log(req.body);
-
-
         const existingForm = await Form.findOne({ email: req.body.email });
 
         if (existingForm) {

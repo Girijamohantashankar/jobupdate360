@@ -31,3 +31,13 @@
     font-size: 1rem;
     color: #666;
 }
+
+@media (max-width: 768px) {
+    .no_found_container h1 {
+        text-align: center;
+        margin-top: 0;
+    }
+    .no_found_container p{
+        font-size: 12px;
+    }
+}

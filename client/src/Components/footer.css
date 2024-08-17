@@ -157,6 +157,10 @@
     flex-direction: column;
     gap: 42px;
     align-items: baseline;
+  }.footer-middle{
+    gap: 5px;
+  }.subscribe input{
+    width: 275px;
   }
 }
 

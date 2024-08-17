@@ -59,3 +59,9 @@
 .modal_overlay_logout .modal_content i:hover {
     color: #ff0000;
 }
+
+@media (max-width: 768px) {
+    .modal_overlay_logout .modal_content {
+        margin: 28px;
+    }
+}

@@ -1,11 +1,12 @@
 .feedback-container {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     padding: 20px;
 }
 
 .feedback-card {
+    background: #fff;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -14,6 +15,9 @@
     padding: 20px;
     width: 300px;
     text-align: left;
+    max-height: 300px;
+    overflow: auto;
+
 }
 
 .feedback-actions {
@@ -42,7 +46,8 @@
 .feedback-actions button:hover {
     background: #0056b3;
 }
-.no-feedbacks{
+
+.no-feedbacks {
 
     height: 100vh;
     display: flex;
@@ -50,4 +55,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+
+@media (max-width: 768px) {
+    .feedback-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
